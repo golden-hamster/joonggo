@@ -13,7 +13,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "post_id")
-    private Long postId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -21,6 +21,10 @@ public class Post {
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     private String title;
 

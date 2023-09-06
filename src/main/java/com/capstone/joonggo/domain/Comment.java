@@ -12,7 +12,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "comment_id")
-    private Long commentId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -25,6 +25,10 @@ public class Comment {
     private String content;
 
     private LocalDateTime createdTime;
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public static Comment createComment(Post post, Member member, String content) {
         Comment cmt = new Comment();
