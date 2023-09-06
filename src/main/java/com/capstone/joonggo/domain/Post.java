@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,11 +16,11 @@ public class Post {
     private Long postId;
 
     @ManyToOne
-    @Column(name = "member_id")
+    @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(name = "comment_id")
-    private Comment comment;
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
 
     private String title;
 
