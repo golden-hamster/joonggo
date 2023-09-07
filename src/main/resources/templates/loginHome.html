@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+hello
+<div th:text="|로그인: ${memberName}|">로그인 사용자 이름</div>
+<p>
+    <a href="/members">All Members</a>
+    <a href="/community">Community</a>
+<form action="/logout" method="post">
+    <button type="submit">
+        Logout
+    </button>
+</form>
+</p>
+</body>
+</html>
