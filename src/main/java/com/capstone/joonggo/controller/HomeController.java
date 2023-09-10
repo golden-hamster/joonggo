@@ -34,10 +34,9 @@ public class HomeController {
             return "home";
         }
 
-        //세션이 유지되면 loginHome 으로 이동
-        model.addAttribute("memberName", member.getName());
-        model.addAttribute("loginId", member.getLoginId());
-        return "loginHome";
+        //세션이 유지되면 market 으로 이동
+        model.addAttribute("member", member);
+        return "redirect:/market";
 
     }
 
@@ -59,4 +58,5 @@ public class HomeController {
     public String login() {
         return "login";
     }
+
 }
