@@ -8,7 +8,18 @@ import java.time.LocalDateTime;
 @Data
 public class MarketDto {
 
-    public Member member;
+    private String title;
 
-    public LocalDateTime createdTime;
+    private Long price;
+
+    private Long postId;
+
+    private LocalDateTime createdTime;
+
+    public MarketDto(String title, Long price, Long postId, LocalDateTime createdTime) {
+        this.title = title;
+        this.price = price;
+        this.postId = postId;
+        this.createdTime = createdTime;
+    }
 }

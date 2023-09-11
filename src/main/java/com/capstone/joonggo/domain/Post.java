@@ -30,13 +30,16 @@ public class Post {
 
     private String content;
 
+    private Long price;
+
     private LocalDateTime createdTime;
 
-    public static Post createPost(Member member, String title, String content) {
+    public static Post createPost(Member member, String title, String content, Long price) {
         Post post = new Post();
         post.member = member;
         post.title = title;
         post.content = content;
+        post.price = price;
         post.createdTime = LocalDateTime.now();
         return  post;
     }
