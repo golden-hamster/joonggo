@@ -24,7 +24,7 @@ public class Comment {
 
     private String content;
 
-    private LocalDateTime createdTime;
+    private LocalDateTime createdDate;
 
     public void setContent(String content) {
         this.content = content;
@@ -35,7 +35,7 @@ public class Comment {
         cmt.post = post;
         cmt.member = member;
         cmt.content = content;
-        cmt.createdTime = LocalDateTime.now();
+        cmt.createdDate = LocalDateTime.now();
         return cmt;
     }
 }

@@ -18,16 +18,23 @@ public class Member {
 
     private String password;
 
+    private String nickName;
+
+    private Long studentId;
+
     private String name;
 
-    private LocalDateTime createdTime;
+    private LocalDateTime createdDate;
 
-    public static Member createMember(String loginId, String password, String name) {
+    public static Member createMember(String loginId, String password,String nickName, String name,
+                                      Long studentId) {
         Member member = new Member();
         member.loginId = loginId;
         member.password = password;
         member.name = name;
-        member.createdTime = LocalDateTime.now();
+        member.nickName = nickName;
+        member.studentId = studentId;
+        member.createdDate = LocalDateTime.now();
         return member;
     }
 }

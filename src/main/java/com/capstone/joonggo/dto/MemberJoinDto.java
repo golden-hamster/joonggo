@@ -9,5 +9,11 @@ public class MemberJoinDto {
 
     private String password;
 
+    private String nickName;
+
     private String name;
+
+    private Long studentId;
+
+
 }

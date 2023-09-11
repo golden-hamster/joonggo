@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Community</title>
+</head>
+<body>
+<h1>Community</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Created date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post : ${posts}">
+        <td>
+            <a th:href="@{~/community/{postId}(postId=${post.postId})}" th:text="${post.title}"></a>
+        </td>
+        <td>
+            <a th:href="@{~/member/{loginId}(loginId=${post.loginId})}" th:text="${post.author}"></a>
+        </td>
+        <td>
+            <div th:text="${post.createdDate}"></div>
+        </td>
+        <td>
+            <div th:text="${post.loginId}"></div>
+        </td>
+    </tr>
+    <!--    <tr th:each="post : ${posts}">-->
+    <!--        <td><a th:href="@{post/{title}(title=${post.title})}" th:text="${post.title}"></a></td>-->
+    <!--        <td><a th:href="@{member/{loginId}(loginId=${post.member.loginId})}" th:text="${post.member.name}"></a></td>-->
+    <!--        <td th:text="${post.createdDate}"></td>-->
+    <!--    </tr>-->
+    </tbody>
+</table>
+<button onclick="location.href='/community/createPost'">글쓰기</button>
+<a href="/">Home</a>
+</body>
+</html>

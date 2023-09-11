@@ -35,7 +35,6 @@ public class HomeController {
         }
 
         //세션이 유지되면 market 으로 이동
-        model.addAttribute("member", member);
         return "redirect:/market";
 
     }
@@ -47,16 +46,13 @@ public class HomeController {
 
     @PostMapping("/member/join")
     public String join(@Valid @ModelAttribute MemberJoinDto memberJoinDto, Model model) {
-        Member member = Member.createMember(memberJoinDto.getLoginId(), memberJoinDto.getPassword(), memberJoinDto.getName());
+        Member member = Member.createMember(memberJoinDto.getLoginId(), memberJoinDto.getPassword(),
+                memberJoinDto.getNickName(), memberJoinDto.getName(), memberJoinDto.getStudentId());
         memberService.join(member);
         model.addAttribute("memberName", member.getName());
         model.addAttribute("loginId", member.getLoginId());
         return "redirect:/";
-    }
 
-    @GetMapping("/member/login")
-    public String login() {
-        return "login";
     }
 
 }
