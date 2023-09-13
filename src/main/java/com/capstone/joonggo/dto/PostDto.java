@@ -11,7 +11,7 @@ public class PostDto {
 
     public String nickName;
 
-    public Long price;
+    public int price;
 
     public String content;
 
