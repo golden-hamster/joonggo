@@ -30,13 +30,14 @@ public class Post {
 
     private String content;
 
-    private Long price;
+    private int price;
 
     private LocalDateTime createdDate;
 
-//    private List<Image> images;
+    @OneToMany
+    private List<UploadFile> imageFiles;
 
-    public static Post createPost(Member member, String title, String content, Long price) {
+    public static Post createPost(Member member, String title, String content, int price) {
         Post post = new Post();
         post.member = member;
         post.title = title;

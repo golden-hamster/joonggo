@@ -27,9 +27,9 @@ public class InitDb {
         private final CommentService commentService;
 
         public void dbInit() {
-            Member member1 = Member.createMember("test1", "test", "test1", "test", 123L);
-            Member member2 = Member.createMember("test2", "test", "test2", "test", 123L);
-            Member member3 = Member.createMember("test3", "test", "test3", "test", 123L);
+            Member member1 = Member.createMember("test1", "test", "test1", "test", 123);
+            Member member2 = Member.createMember("test2", "test", "test2", "test", 124);
+            Member member3 = Member.createMember("test3", "test", "test3", "test", 125);
 
             em.persist(member1);
             em.persist(member2);

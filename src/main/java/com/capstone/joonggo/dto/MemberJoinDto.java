@@ -13,7 +13,7 @@ public class MemberJoinDto {
 
     private String name;
 
-    private Long studentId;
+    private int studentId;
 
 
 }
