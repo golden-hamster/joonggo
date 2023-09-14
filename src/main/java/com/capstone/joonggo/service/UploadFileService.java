@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +21,7 @@ import java.util.UUID;
 @Transactional(readOnly = true)
 public class UploadFileService {
 
-    private UploadFileRepository uploadFileRepository;
+    private final UploadFileRepository uploadFileRepository;
 
 
     @Value("${file.dir}")
@@ -48,7 +50,9 @@ public class UploadFileService {
 
         String originalFilename = multipartFile.getOriginalFilename();
         String storeFilename = createStoreFilename(originalFilename);
-        multipartFile.transferTo(new File(getFullPath(storeFilename)));
+        String path = fileDir + storeFilename;
+        Path savePath = Paths.get(path);
+        multipartFile.transferTo(savePath);
 
         //엔티티를 생성하고 저장
         UploadFile uploadFile = UploadFile.createUploadFile(originalFilename, storeFilename);

@@ -70,11 +70,7 @@ public class MarketController {
     }
 
     @GetMapping("/market/create")
-    public String createPostForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Long memberId,
-                                 Model model) {
-        Member member = memberService.findById(memberId);
-        String name = member.getName();
-        model.addAttribute("name", name);
+    public String createPostForm() {
         return "createPost";
     }
 
