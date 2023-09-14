@@ -13,7 +13,7 @@ public class MemberJoinDto {
 
     private String name;
 
-    private int studentId;
+    private Integer studentId;
 
 
 }

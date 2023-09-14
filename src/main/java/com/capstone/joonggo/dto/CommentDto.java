@@ -9,9 +9,16 @@ public class CommentDto {
 
     public String author;
 
-    public Long memberId;
+    public String loginId;
 
     public String content;
 
     public LocalDateTime createdTime;
+
+    public CommentDto(String author, String loginId, String content, LocalDateTime createdTime) {
+        this.author = author;
+        this.loginId = loginId;
+        this.content = content;
+        this.createdTime = createdTime;
+    }
 }

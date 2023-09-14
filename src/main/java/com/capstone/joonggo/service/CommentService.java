@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,10 @@ public class CommentService {
     public void update(Long id, String content) {
         Comment comment = commentRepository.findById(id).get();
         comment.setContent(content);
+    }
+
+    public List<Comment> findByPostId(Long postId) {
+        return commentRepository.findByPostId(postId);
     }
 
     @Transactional

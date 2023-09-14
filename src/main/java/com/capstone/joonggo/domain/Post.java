@@ -30,19 +30,20 @@ public class Post {
 
     private String content;
 
-    private int price;
+    private Integer price;
 
     private LocalDateTime createdDate;
 
     @OneToMany
     private List<UploadFile> imageFiles;
 
-    public static Post createPost(Member member, String title, String content, int price) {
+    public static Post createPost(Member member, String title, String content, Integer price, List<UploadFile> imageFiles) {
         Post post = new Post();
         post.member = member;
         post.title = title;
         post.content = content;
         post.price = price;
+        post.imageFiles = imageFiles;
         post.createdDate = LocalDateTime.now();
         return  post;
     }

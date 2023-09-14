@@ -22,13 +22,13 @@ public class HomeController {
     private final MemberService memberService;
 
     @GetMapping("/")
-    public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) LoginDto loginDto, Model model) {
+    public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)Long memberId, Model model) {
 
-        if (loginDto == null) {
+        if (memberId == null) {
             return "home";
         }
 
-        Member member = memberService.findByLoginId(loginDto.getLoginId());
+        Member member = memberService.findById(memberId);
 
         if (member == null) {
             return "home";

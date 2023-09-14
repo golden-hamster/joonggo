@@ -3,18 +3,23 @@ package com.capstone.joonggo.controller;
 import com.capstone.joonggo.domain.Comment;
 import com.capstone.joonggo.domain.Member;
 import com.capstone.joonggo.domain.Post;
-import com.capstone.joonggo.dto.CommentDto;
-import com.capstone.joonggo.dto.LoginDto;
-import com.capstone.joonggo.dto.MarketDto;
+import com.capstone.joonggo.domain.UploadFile;
+import com.capstone.joonggo.dto.*;
 import com.capstone.joonggo.service.CommentService;
 import com.capstone.joonggo.service.MemberService;
 import com.capstone.joonggo.service.PostService;
+import com.capstone.joonggo.service.UploadFileService;
 import com.capstone.joonggo.session.SessionConst;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +30,8 @@ public class MarketController {
     private final PostService postService;
     private final MemberService memberService;
     private final CommentService commentService;
+    private final UploadFileService uploadFileService;
+
 
     @GetMapping("/market")
     public String market(Model model) {
@@ -39,19 +46,50 @@ public class MarketController {
     }
 
     @GetMapping("/market/{postId}")
-    public String postForm(@PathVariable(name = "postId") Long PostId,
-                           @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) LoginDto loginDto,
+    public String postForm(@PathVariable(name = "postId") Long postId,
+                           @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Long memberId,
                            Model model) {
+        Post post = postService.findById(postId);
+        Member member = memberService.findById(memberId);
+
+        boolean loginMemberFlag = post.getMember().getId().equals(memberId);
+
+        List<Comment> comments = commentService.findByPostId(postId);
+        List<CommentDto> commentDtoList = new ArrayList<>();
+        for (Comment comment : comments) {
+            CommentDto commentDto = convertToCommentDto(comment);
+            commentDtoList.add(commentDto);
+        }
+
+        PostDto postDto = convertToPostDto(post);
+        model.addAttribute("post", postDto);
+        model.addAttribute("loginMemberFlag", loginMemberFlag);
+
+
         return "post";
     }
 
     @GetMapping("/market/create")
-    public String createPostForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) LoginDto loginDto,
+    public String createPostForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Long memberId,
                                  Model model) {
-        Member member = memberService.findByLoginId(loginDto.getLoginId());
+        Member member = memberService.findById(memberId);
         String name = member.getName();
         model.addAttribute("name", name);
         return "createPost";
+    }
+
+    @PostMapping("/market/create")
+    public String createPost(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Long memberId ,
+                             @ModelAttribute CreatePostDto createPostDto,
+                             RedirectAttributes redirectAttributes) throws IOException {
+        List<UploadFile> uploadFiles = uploadFileService.saveFiles(createPostDto.getImageFiles());
+        Member member = memberService.findById(memberId);
+        Post post = Post.createPost(member, createPostDto.getTitle(), createPostDto.getContent(), createPostDto.getPrice(), uploadFiles);
+        Long postId = postService.save(post);
+
+        redirectAttributes.addAttribute("postId", postId);
+
+        return "redirect:/market/{postId}";
     }
 
     @PostMapping("/market/{postId}/comment")
@@ -72,7 +110,7 @@ public class MarketController {
     }
 
     @PostMapping("/market/{postId}/deleteComment")
-    public String deleteComment(@PathVariable(name = "postId")Long postId,long commentId) {
+    public String deleteComment(@PathVariable(name = "postId") Long postId, long commentId) {
         commentService.delete(commentId);
         return "/redirect:/market/" + postId;
     }
@@ -81,4 +119,15 @@ public class MarketController {
         return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), post.getCreatedDate());
     }
 
+    public CommentDto convertToCommentDto(Comment comment) {
+        String author = comment.getMember().getNickName();
+        String loginId = comment.getMember().getLoginId();
+        return new CommentDto(author, loginId, comment.getContent(), comment.getCreatedDate());
+    }
+
+
+    public PostDto convertToPostDto(Post post) {
+        String nickName = post.getMember().getNickName();
+        return new PostDto(post.getTitle(), nickName, post.getPrice(), post.getContent(), post.getImageFiles(), post.getCreatedDate());
+    }
 }

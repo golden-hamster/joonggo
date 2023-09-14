@@ -20,14 +20,14 @@ public class Member {
 
     private String nickName;
 
-    private int studentId;
+    private Integer studentId;
 
     private String name;
 
     private LocalDateTime createdDate;
 
     public static Member createMember(String loginId, String password,String nickName, String name,
-                                      int studentId) {
+                                      Integer studentId) {
         Member member = new Member();
         member.loginId = loginId;
         member.password = password;

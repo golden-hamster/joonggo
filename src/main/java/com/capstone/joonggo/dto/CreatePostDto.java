@@ -10,7 +10,7 @@ public class CreatePostDto {
 
     private String title;
 
-    private int price;
+    private Integer price;
 
     private String content;
 

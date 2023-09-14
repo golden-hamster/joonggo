@@ -10,13 +10,13 @@ public class MarketDto {
 
     private String title;
 
-    private int price;
+    private Integer price;
 
     private Long postId;
 
     private LocalDateTime createdTime;
 
-    public MarketDto(String title, int price,Long postId, LocalDateTime createdTime) {
+    public MarketDto(String title, Integer price,Long postId, LocalDateTime createdTime) {
         this.title = title;
         this.price = price;
         this.postId = postId;

@@ -15,15 +15,15 @@ public class UploadFile {
     @Column(name = "file_id")
     private Long fileId;
 
-    private String uploadName;
+    private String originalName;
 
     private String storeName;
 
     private LocalDateTime createdDate;
 
-    public static UploadFile createUploadFile(String uploadName, String storeName) {
+    public static UploadFile createUploadFile(String originalName, String storeName) {
         UploadFile uploadFile = new UploadFile();
-        uploadFile.uploadName = uploadName;
+        uploadFile.originalName = originalName;
         uploadFile.storeName = storeName;
         uploadFile.createdDate = LocalDateTime.now();
         return uploadFile;
