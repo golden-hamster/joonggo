@@ -1,6 +1,5 @@
 package com.capstone.joonggo.dto;
 
-import com.capstone.joonggo.domain.UploadFile;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,16 +16,16 @@ public class PostDto {
 
     public String content;
 
-    public List<UploadFile> imageFiles;
+    public List<String> storeFileNames;
 
     public LocalDateTime createdTime;
 
-    public PostDto(String title, String nickName, Integer price, String content, List<UploadFile> imageFiles, LocalDateTime createdTime) {
+    public PostDto(String title, String nickName, Integer price, String content, List<String> storeNames, LocalDateTime createdTime) {
         this.title = title;
         this.nickName = nickName;
         this.price = price;
         this.content = content;
-        this.imageFiles = imageFiles;
+        this.storeFileNames = storeNames;
         this.createdTime = createdTime;
     }
 }

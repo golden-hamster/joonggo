@@ -2,6 +2,7 @@ package com.capstone.joonggo.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.Fetch;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,16 +16,16 @@ public class Post {
     @Column(name = "post_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "category_id")
+//    private Category category;
 
     private String title;
 
@@ -34,8 +35,8 @@ public class Post {
 
     private LocalDateTime createdDate;
 
-    @OneToMany
-    private List<UploadFile> imageFiles;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UploadFile> uploadFiles;
 
     public static Post createPost(Member member, String title, String content, Integer price, List<UploadFile> imageFiles) {
         Post post = new Post();
@@ -43,7 +44,7 @@ public class Post {
         post.title = title;
         post.content = content;
         post.price = price;
-        post.imageFiles = imageFiles;
+        post.uploadFiles = imageFiles;
         post.createdDate = LocalDateTime.now();
         return  post;
     }

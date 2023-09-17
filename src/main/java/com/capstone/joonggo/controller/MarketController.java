@@ -11,15 +11,15 @@ import com.capstone.joonggo.service.PostService;
 import com.capstone.joonggo.service.UploadFileService;
 import com.capstone.joonggo.session.SessionConst;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +52,9 @@ public class MarketController {
         Post post = postService.findById(postId);
         Member member = memberService.findById(memberId);
 
-        boolean loginMemberFlag = post.getMember().getId().equals(memberId);
+        boolean authorFlag = post.getMember().getId().equals(memberId);
+
+        boolean loginMemberFlag = (memberId != null);
 
         List<Comment> comments = commentService.findByPostId(postId);
         List<CommentDto> commentDtoList = new ArrayList<>();
@@ -63,11 +65,19 @@ public class MarketController {
 
         PostDto postDto = convertToPostDto(post);
         model.addAttribute("post", postDto);
+        model.addAttribute("authorFlag", authorFlag);
         model.addAttribute("loginMemberFlag", loginMemberFlag);
 
 
         return "post";
     }
+
+    @ResponseBody
+    @GetMapping("/images/{storeName}")
+    public Resource downloadImage(@PathVariable String storeName) throws MalformedURLException {
+        return new UrlResource("file:" + uploadFileService.getFullPath(storeName));
+    }
+
 
     @GetMapping("/market/create")
     public String createPostForm() {
@@ -102,7 +112,7 @@ public class MarketController {
     @PostMapping("/market/delete")
     public String deletePost(Long postId) {
         postService.delete(postId);
-        return "/redirect:/market";
+        return "redirect:/market";
     }
 
     @PostMapping("/market/{postId}/deleteComment")
@@ -124,6 +134,12 @@ public class MarketController {
 
     public PostDto convertToPostDto(Post post) {
         String nickName = post.getMember().getNickName();
-        return new PostDto(post.getTitle(), nickName, post.getPrice(), post.getContent(), post.getImageFiles(), post.getCreatedDate());
+        List<UploadFile> uploadFiles = post.getUploadFiles();
+        List<String> storeNames = new ArrayList<>();
+        for (UploadFile uploadFile : uploadFiles) {
+            String storeName = uploadFile.getStoreName();
+            storeNames.add(storeName);
+        }
+        return new PostDto(post.getTitle(), nickName, post.getPrice(), post.getContent(), storeNames, post.getCreatedDate());
     }
 }

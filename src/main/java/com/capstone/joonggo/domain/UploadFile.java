@@ -13,7 +13,7 @@ public class UploadFile {
     @GeneratedValue
     @Id
     @Column(name = "file_id")
-    private Long fileId;
+    private Long id;
 
     private String originalName;
 

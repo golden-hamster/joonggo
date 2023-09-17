@@ -14,12 +14,12 @@ public class MarketDto {
 
     private Long postId;
 
-    private LocalDateTime createdTime;
+    private LocalDateTime createdDate;
 
-    public MarketDto(String title, Integer price,Long postId, LocalDateTime createdTime) {
+    public MarketDto(String title, Integer price,Long postId, LocalDateTime createdDate) {
         this.title = title;
         this.price = price;
         this.postId = postId;
-        this.createdTime = createdTime;
+        this.createdDate = createdDate;
     }
 }

@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<div>
+    <div>
+        <h2>상품 조회</h2>
+    </div>
+    상품명: <span th:text="${post.title}">상품명</span><br/>
+    <img th:each="storeFileName : ${post.storeFileNames}" th:src="|/images/${storeFileName}|" width="300" height="300"/>
+</div>
+<div>
+    <a href="/">메인으로</a>
+</div>
+<div th:if="${authorFlag}">
+    <form th:action="@{~/market/delete}" method="post">
+        <input type="hidden" name="postId" th:value="${postId}" />
+        <button type="submit">삭제</button>
+    </form>
+</div>
+<div th:if="${loginMemberFlag}">
+    <h3>댓글 작성</h3>
+    <form th:action="@{~/market/{postId}/comment(postId=${postId})}" method="post">
+        <!--        <input type="hidden" name="postId" th:value="${postId}" />-->
+        <!--        <input type="hidden" name="userName" th:value="${userName}" />-->
+        <textarea name="description"></textarea>
+        <button type="submit">댓글 작성</button>
+    </form>
+</div>
+<div>
+</body>
+</html>

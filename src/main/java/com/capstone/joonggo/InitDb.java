@@ -1,6 +1,7 @@
 package com.capstone.joonggo;
 
 import com.capstone.joonggo.domain.Member;
+import com.capstone.joonggo.domain.Post;
 import com.capstone.joonggo.service.CommentService;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
@@ -34,6 +35,14 @@ public class InitDb {
             em.persist(member1);
             em.persist(member2);
             em.persist(member3);
+
+            Post testPost1 = Post.createPost(member1, "Test title1", "content is...", 15000, null);
+            Post testPost2 = Post.createPost(member2, "Test title2", "content is...", 25000, null);
+            Post testPost3 = Post.createPost(member3, "Test title3", "content is...", 35000, null);
+
+            em.persist(testPost1);
+            em.persist(testPost2);
+            em.persist(testPost3);
         }
     }
 }
