@@ -1,5 +1,6 @@
 package com.capstone.joonggo;
 
+import com.capstone.joonggo.domain.Comment;
 import com.capstone.joonggo.domain.Member;
 import com.capstone.joonggo.domain.Post;
 import com.capstone.joonggo.service.CommentService;
@@ -43,6 +44,13 @@ public class InitDb {
             em.persist(testPost1);
             em.persist(testPost2);
             em.persist(testPost3);
+
+            Comment comment1 = Comment.createComment(testPost1, member1, "Comment is...");
+            Comment comment2 = Comment.createComment(testPost1, member2, "Comment is...");
+            Comment comment3 = Comment.createComment(testPost1, member3, "Comment is...");
+            em.persist(comment1);
+            em.persist(comment2);
+            em.persist(comment3);
         }
     }
 }

@@ -63,11 +63,15 @@ public class MarketController {
             commentDtoList.add(commentDto);
         }
 
+        String loginId = member.getLoginId();
+
         PostDto postDto = convertToPostDto(post);
         model.addAttribute("post", postDto);
+        model.addAttribute("postId", postId);
+        model.addAttribute("comments", commentDtoList);
+        model.addAttribute("loginId", loginId);
         model.addAttribute("authorFlag", authorFlag);
         model.addAttribute("loginMemberFlag", loginMemberFlag);
-
 
         return "post";
     }
@@ -115,10 +119,10 @@ public class MarketController {
         return "redirect:/market";
     }
 
-    @PostMapping("/market/{postId}/deleteComment")
-    public String deleteComment(@PathVariable(name = "postId") Long postId, long commentId) {
+    @PostMapping("/deleteComment")
+    public String deleteComment(Long postId, Long commentId) {
         commentService.delete(commentId);
-        return "/redirect:/market/" + postId;
+        return "redirect:/market/" + postId;
     }
 
     public MarketDto convertToMarketDto(Post post) {
@@ -128,7 +132,7 @@ public class MarketController {
     public CommentDto convertToCommentDto(Comment comment) {
         String author = comment.getMember().getNickName();
         String loginId = comment.getMember().getLoginId();
-        return new CommentDto(author, loginId, comment.getContent(), comment.getCreatedDate());
+        return new CommentDto(comment.getId(),author, loginId, comment.getContent(), comment.getCreatedDate());
     }
 
 
