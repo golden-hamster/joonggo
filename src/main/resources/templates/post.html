@@ -23,8 +23,6 @@
 <div th:if="${loginMemberFlag}">
     <h3>댓글 작성</h3>
     <form th:action="@{~/market/{postId}/comment(postId=${postId})}" method="post">
-        <!--        <input type="hidden" name="postId" th:value="${postId}" />-->
-        <!--        <input type="hidden" name="userName" th:value="${userName}" />-->
         <textarea name="content"></textarea>
         <button type="submit">댓글 작성</button>
     </form>
