@@ -2,36 +2,104 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Market</title>
+    <title>중고거래</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .item {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            flex-basis: calc(33.333% - 20px); /* 3열로 정렬하며 간격 제공 */
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .item img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .item a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #333;
+            display: block;
+        }
+
+        .item a:hover {
+            color: #4CAF50;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button {
+            display: block;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+
+
+    </style>
 </head>
 <body>
-<h1>Market</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Price</th>
-        <th>Created date</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="post : ${posts}">
-        <td>
-            <img th:src="|/images/${post.thumbnailName}|" width="100" height="100"/>
-        </td>
-        <td>
-            <a th:href="@{~/market/{postId}(postId=${post.postId})}" th:text="${post.title}"></a>
-        </td>
-        <td>
-            <a th:href="@{~/market/{postId}(postId=${post.postId})}" th:text="${post.price}"></a>
-        </td>
-        <td>
-            <div th:text="${post.createdDate}"></div>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<h1>UNISWAP</h1>
 <button onclick="location.href='/market/create'">상품 등록 하기</button>
+<div class="container">
+    <div th:each="post : ${posts}" class="item">
+        <img th:src="|/images/${post.thumbnailName}|"/>
+        <a th:href="@{~/market/{postId}(postId=${post.postId})}" th:text="${post.title}"></a>
+        <a th:text="${post.price}"></a>
+        <div th:text="${post.createdDate}"></div>
+    </div>
+</div>
 <a href="/">Home</a>
 </body>
 </html>
