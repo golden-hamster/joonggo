@@ -17,6 +17,9 @@
     <tbody>
     <tr th:each="post : ${posts}">
         <td>
+            <img th:src="|/images/${post.thumbnailName}|" width="100" height="100"/>
+        </td>
+        <td>
             <a th:href="@{~/market/{postId}(postId=${post.postId})}" th:text="${post.title}"></a>
         </td>
         <td>
@@ -26,11 +29,6 @@
             <div th:text="${post.createdDate}"></div>
         </td>
     </tr>
-    <!--    <tr th:each="post : ${posts}">-->
-    <!--        <td><a th:href="@{post/{title}(title=${post.title})}" th:text="${post.title}"></a></td>-->
-    <!--        <td><a th:href="@{member/{loginId}(loginId=${post.member.loginId})}" th:text="${post.member.name}"></a></td>-->
-    <!--        <td th:text="${post.createdDate}"></td>-->
-    <!--    </tr>-->
     </tbody>
 </table>
 <button onclick="location.href='/market/create'">상품 등록 하기</button>

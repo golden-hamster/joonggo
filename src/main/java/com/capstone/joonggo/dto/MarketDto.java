@@ -1,6 +1,5 @@
 package com.capstone.joonggo.dto;
 
-import com.capstone.joonggo.domain.Member;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,12 +13,15 @@ public class MarketDto {
 
     private Long postId;
 
+    private String thumbnailName;
+
     private LocalDateTime createdDate;
 
-    public MarketDto(String title, Integer price,Long postId, LocalDateTime createdDate) {
+    public MarketDto(String title, Integer price,Long postId, String thumbnailUrl,LocalDateTime createdDate) {
         this.title = title;
         this.price = price;
         this.postId = postId;
+        this.thumbnailName = thumbnailUrl;
         this.createdDate = createdDate;
     }
 }

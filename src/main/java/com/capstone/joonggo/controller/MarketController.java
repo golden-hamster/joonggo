@@ -126,7 +126,16 @@ public class MarketController {
     }
 
     public MarketDto convertToMarketDto(Post post) {
-        return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), post.getCreatedDate());
+        List<UploadFile> uploadFiles = post.getUploadFiles();
+        String thumbnailName = null;
+        if (uploadFiles != null && !uploadFiles.isEmpty()) {
+            UploadFile uploadFile = uploadFiles.get(0);
+             thumbnailName = uploadFile.getStoreName();
+        } else {
+            thumbnailName = "default.jpg";
+        }
+
+        return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName,post.getCreatedDate());
     }
 
     public CommentDto convertToCommentDto(Comment comment) {
