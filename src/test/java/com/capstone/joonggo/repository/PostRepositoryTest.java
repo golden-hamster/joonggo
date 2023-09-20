@@ -31,9 +31,9 @@ public class PostRepositoryTest {
 
         Assertions.assertThat(post.getPrice()).isEqualTo(10000);
 
-        Post findPost = postService.findById(postId);
-
-
+//        postService.update(postId, "updateTitle", "updateContent", 15000, null);
+//
+//        Assertions.assertThat(post.getPrice()).isEqualTo(15000);
 
     }
 }

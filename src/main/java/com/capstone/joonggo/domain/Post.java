@@ -38,14 +38,21 @@ public class Post {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UploadFile> uploadFiles;
 
-    public static Post createPost(Member member, String title, String content, Integer price, List<UploadFile> imageFiles) {
+    public static Post createPost(Member member, String title, String content, Integer price, List<UploadFile> uploadFiles) {
         Post post = new Post();
         post.member = member;
         post.title = title;
         post.content = content;
         post.price = price;
-        post.uploadFiles = imageFiles;
+        post.uploadFiles = uploadFiles;
         post.createdDate = LocalDateTime.now();
         return  post;
+    }
+
+    public void update(String title, String content, Integer price, List<UploadFile> uploadFiles) {
+        this.title = title;
+        this.content = content;
+        this.price = price;
+        this.uploadFiles = uploadFiles;
     }
 }

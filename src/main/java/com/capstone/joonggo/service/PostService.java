@@ -1,6 +1,7 @@
 package com.capstone.joonggo.service;
 
 import com.capstone.joonggo.domain.Post;
+import com.capstone.joonggo.domain.UploadFile;
 import com.capstone.joonggo.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,11 @@ public class PostService {
     public List<Post> findAll() {
         List<Post> posts = postRepository.findAll();
         return posts;
+    }
+
+    @Transactional
+    public void update(Long postId, String title, String content, Integer price, List<UploadFile> uploadFiles) {
+        Post post = postRepository.findById(postId).orElse(null);
+        post.update(title, content, price, uploadFiles);
     }
 }
