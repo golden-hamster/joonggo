@@ -5,12 +5,14 @@ import com.capstone.joonggo.domain.Member;
 import com.capstone.joonggo.domain.Post;
 import com.capstone.joonggo.domain.UploadFile;
 import com.capstone.joonggo.dto.*;
+import com.capstone.joonggo.search.PostSearch;
 import com.capstone.joonggo.service.CommentService;
 import com.capstone.joonggo.service.MemberService;
 import com.capstone.joonggo.service.PostService;
 import com.capstone.joonggo.service.UploadFileService;
 import com.capstone.joonggo.session.SessionConst;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MarketController {
 
     private final PostService postService;
@@ -34,8 +37,8 @@ public class MarketController {
 
 
     @GetMapping("/market")
-    public String market(Model model) {
-        List<Post> posts = postService.findAll();
+    public String market(@ModelAttribute PostSearch search, Model model) {
+        List<Post> posts = postService.findAll(search);
         List<MarketDto> marketDtoList = new ArrayList<>();
         for (Post post : posts) {
             MarketDto marketDto = convertToMarketDto(post);

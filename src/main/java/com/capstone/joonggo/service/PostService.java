@@ -2,7 +2,9 @@ package com.capstone.joonggo.service;
 
 import com.capstone.joonggo.domain.Post;
 import com.capstone.joonggo.domain.UploadFile;
+import com.capstone.joonggo.repository.PostQueryRepository;
 import com.capstone.joonggo.repository.PostRepository;
+import com.capstone.joonggo.search.PostSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,8 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final PostQueryRepository postQueryRepository;
+
 
     @Transactional
     public Long save(Post post) {
@@ -33,6 +37,11 @@ public class PostService {
 
     public List<Post> findAll() {
         List<Post> posts = postRepository.findAll();
+        return posts;
+    }
+
+    public List<Post> findAll(PostSearch search) {
+        List<Post> posts = postQueryRepository.findAll(search);
         return posts;
     }
 
