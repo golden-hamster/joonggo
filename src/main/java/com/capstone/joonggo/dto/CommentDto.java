@@ -1,5 +1,6 @@
 package com.capstone.joonggo.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public class CommentDto {
 
     public String loginId;
 
+    @NotBlank
     public String content;
 
     public LocalDateTime createdDate;

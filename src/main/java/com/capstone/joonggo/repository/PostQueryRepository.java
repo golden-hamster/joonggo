@@ -6,6 +6,9 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -24,6 +27,7 @@ public class PostQueryRepository {
     }
 
 
+    /*
     public List<Post> findAll(PostSearch search) {
         return query.select(post)
                 .from(post)
@@ -31,6 +35,27 @@ public class PostQueryRepository {
                         likeTitle(search.getTitle())
                 )
                 .fetch();
+    }
+
+     */
+
+    public Page<Post> findAll(PostSearch search, Pageable pageable) {
+        List<Post> posts = query.select(post)
+                .from(post)
+                .where(
+                        likeTitle(search.getTitle())
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = query.selectFrom(post)
+                .where(
+                        likeTitle(search.getTitle())
+                )
+                .fetchCount();
+
+        return new PageImpl<>(posts, pageable, total);
     }
 
     private BooleanExpression likeTitle(String title) {
