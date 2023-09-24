@@ -11,12 +11,14 @@ import com.capstone.joonggo.service.MemberService;
 import com.capstone.joonggo.service.PostService;
 import com.capstone.joonggo.service.UploadFileService;
 import com.capstone.joonggo.session.SessionConst;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -87,14 +89,20 @@ public class MarketController {
 
 
     @GetMapping("/market/create")
-    public String createPostForm() {
+    public String createPostForm(Model model) {
+        model.addAttribute("createPostDto", new CreatePostDto());
         return "createPost";
     }
 
     @PostMapping("/market/create")
     public String createPost(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Long memberId ,
-                             @ModelAttribute CreatePostDto createPostDto,
-                             RedirectAttributes redirectAttributes) throws IOException {
+                             @Valid @ModelAttribute CreatePostDto createPostDto,
+                             BindingResult bindingResult, RedirectAttributes redirectAttributes) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            return "createPost";
+        }
+
         List<UploadFile> uploadFiles = uploadFileService.saveFiles(createPostDto.getImageFiles());
         Member member = memberService.findById(memberId);
         Post post = Post.createPost(member, createPostDto.getTitle(), createPostDto.getContent(), createPostDto.getPrice(), uploadFiles);
@@ -108,12 +116,15 @@ public class MarketController {
     @PostMapping("/market/{postId}/comment")
     public String createComment(@PathVariable(name = "postId") Long postId,
                                 @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Long memberId,
-                                @ModelAttribute CommentDto commentDto) {
+                                @Valid @ModelAttribute CommentDto commentDto,
+                                BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         Post findPost = postService.findById(postId);
         Member findMember = memberService.findById(memberId);
         Comment comment = Comment.createComment(findPost, findMember, commentDto.content);
-        commentService.save(comment);
-        return "redirect:/market/" + postId;
+
+        Comment savedComment = commentService.save(comment);
+        redirectAttributes.addAttribute("postId", postId);
+        return "redirect:/market/{postId}";
     }
 
     @PostMapping("/market/delete")

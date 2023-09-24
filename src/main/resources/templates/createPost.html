@@ -20,6 +20,12 @@
             margin-bottom: 20px;
         }
 
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+
         label {
             display: block;
             font-weight: bold;
@@ -52,22 +58,25 @@
 <body>
 <div class="container">
     <h2>상품 등록 폼</h2>
-    <form th:action="@{/market/create}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/market/create}" th:object="${createPostDto}" method="post" enctype="multipart/form-data">
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>
+        </div>
         <div class="form-group">
             <label for="title">제목</label>
-            <input type="text" id="title" name="title" required>
+            <input type="text" id="title" th:field="*{title}" th:errorclass="field-error" required>
         </div>
         <div class="form-group">
             <label for="price">가격</label>
-            <input type="text" id="price" name="price" required>
+            <input type="number" id="price" th:field="*{price}" required>
         </div>
         <div class="form-group">
             <label for="imageFiles">파일</label>
-            <input type="file" id="imageFiles" name="imageFiles" multiple required>
+            <input type="file" id="imageFiles" th:field="*{imageFiles}" multiple>
         </div>
         <div class="form-group">
             <label for="content">내용</label>
-            <textarea id="content" name="content" rows="4" required></textarea>
+            <textarea id="content" th:field="*{content}" rows="4" required></textarea>
         </div>
         <button type="submit">등록</button>
     </form>

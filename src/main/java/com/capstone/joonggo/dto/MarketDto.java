@@ -17,11 +17,11 @@ public class MarketDto {
 
     private LocalDateTime createdDate;
 
-    public MarketDto(String title, Integer price,Long postId, String thumbnailUrl,LocalDateTime createdDate) {
+    public MarketDto(String title, Integer price,Long postId, String thumbnailName,LocalDateTime createdDate) {
         this.title = title;
         this.price = price;
         this.postId = postId;
-        this.thumbnailName = thumbnailUrl;
+        this.thumbnailName = thumbnailName;
         this.createdDate = createdDate;
     }
 }

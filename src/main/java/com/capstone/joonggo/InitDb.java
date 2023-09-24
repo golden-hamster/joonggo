@@ -18,7 +18,8 @@ public class InitDb {
 
     @PostConstruct
     public void init() {
-        initService.dbInit();
+//        initService.dbInit();
+        initService.dbInit2();
     }
 
     @Component
@@ -51,6 +52,25 @@ public class InitDb {
             em.persist(comment1);
             em.persist(comment2);
             em.persist(comment3);
+        }
+
+        public void dbInit2() {
+            for (int i = 1; i <= 3; i++) {
+                // 멤버 생성
+                Member member = Member.createMember("test" + i, "test", "test" + i, "test", 120 + i);
+                em.persist(member);
+                // 글 생성
+                for (int j = 1; j <= 10; j++) {
+                    Post post = Post.createPost(member, "Test title" + j, "content is...", 15000 + (j * 1000), null);
+                    em.persist(post);
+
+                    // 댓글 생성
+                    for (int k = 1; k <= 10; k++) {
+                        Comment comment = Comment.createComment(post, member, "Comment is...");
+                        em.persist(comment);
+                    }
+                }
+            }
         }
     }
 }
