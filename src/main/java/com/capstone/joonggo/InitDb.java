@@ -60,7 +60,7 @@ public class InitDb {
                 Member member = Member.createMember("test" + i, "test", "test" + i, "test", 120 + i);
                 em.persist(member);
                 // 글 생성
-                for (int j = 1; j <= 100; j++) {
+                for (int j = 1; j <= 1000; j++) {
                     Post post = Post.createPost(member, "Test title" + j, "content is...", 15000 + (j * 1000), null);
                     em.persist(post);
 

@@ -46,12 +46,14 @@ public class MarketController {
     public String market(@ModelAttribute PostSearch search, Model model,
                          @PageableDefault(page = 0, size = 20, direction = Sort.Direction.DESC)Pageable pageable) {
         Page<Post> posts = postService.findAll(search, pageable);
+
         List<MarketDto> marketDtoList = new ArrayList<>();
         for (Post post : posts) {
             MarketDto marketDto = convertToMarketDto(post);
             marketDtoList.add(marketDto);
         }
         model.addAttribute("posts", marketDtoList);
+        model.addAttribute("paging", posts);
         return "market";
     }
 
@@ -151,7 +153,8 @@ public class MarketController {
             UploadFile uploadFile = uploadFiles.get(0);
              thumbnailName = uploadFile.getStoreName();
         } else {
-            thumbnailName = "default.png";
+//            thumbnailName = "default.png";
+            thumbnailName = "default.jpg";
         }
 
         return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName,post.getCreatedDate());
