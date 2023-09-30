@@ -35,6 +35,8 @@ public class Post {
 
     private LocalDateTime createdDate;
 
+    private PostStatus postStatus;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UploadFile> uploadFiles;
 
