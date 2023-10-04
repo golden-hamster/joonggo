@@ -44,10 +44,10 @@ public class LoginController {
             return "login";
         }
 
+        //로그인 성공 처리
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, member.getId());
 
-        //로그인 성공 처리
         return "redirect:" + redirectURL;
     }
 
