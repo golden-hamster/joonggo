@@ -1,4 +1,4 @@
-package com.capstone.joonggo;
+package com.capstone.joonggo.config;
 
 import com.capstone.joonggo.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
