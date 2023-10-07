@@ -20,5 +20,7 @@ public class MemberJoinDto {
 
     private Integer studentId;
 
+    private String email;
+
 
 }

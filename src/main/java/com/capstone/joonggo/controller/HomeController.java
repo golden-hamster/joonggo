@@ -1,6 +1,8 @@
 package com.capstone.joonggo.controller;
 
+import com.capstone.joonggo.domain.LoginType;
 import com.capstone.joonggo.domain.Member;
+import com.capstone.joonggo.domain.Role;
 import com.capstone.joonggo.dto.LoginDto;
 import com.capstone.joonggo.dto.MemberJoinDto;
 import com.capstone.joonggo.service.MemberService;
@@ -47,7 +49,8 @@ public class HomeController {
     @PostMapping("/member/join")
     public String join(@Valid @ModelAttribute MemberJoinDto memberJoinDto, Model model) {
         Member member = Member.createMember(memberJoinDto.getLoginId(), memberJoinDto.getPassword(),
-                memberJoinDto.getNickName(), memberJoinDto.getName(), memberJoinDto.getStudentId());
+                memberJoinDto.getNickName(), memberJoinDto.getName(), memberJoinDto.getStudentId(), memberJoinDto.getEmail(),
+                Role.ROLE_USER, LoginType.NORMAL);
         memberService.join(member);
         model.addAttribute("memberName", member.getName());
         model.addAttribute("loginId", member.getLoginId());
