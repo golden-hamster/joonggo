@@ -75,13 +75,13 @@ public class MarketController {
             commentDtoList.add(commentDto);
         }
 
-        String loginId = member.getLoginId();
+        String email = member.getEmail();
 
         PostDto postDto = convertToPostDto(post);
         model.addAttribute("post", postDto);
         model.addAttribute("postId", postId);
         model.addAttribute("comments", commentDtoList);
-        model.addAttribute("loginId", loginId);
+        model.addAttribute("email", email);
         model.addAttribute("authorFlag", authorFlag);
         model.addAttribute("loginMemberFlag", loginMemberFlag);
 
@@ -162,8 +162,8 @@ public class MarketController {
 
     public CommentDto convertToCommentDto(Comment comment) {
         String author = comment.getMember().getNickName();
-        String loginId = comment.getMember().getLoginId();
-        return new CommentDto(comment.getId(),author, loginId, comment.getContent(), comment.getCreatedDate());
+        String email = comment.getMember().getEmail();
+        return new CommentDto(comment.getId(),author, email, comment.getContent(), comment.getCreatedDate());
     }
 
 

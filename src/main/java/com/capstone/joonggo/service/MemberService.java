@@ -1,13 +1,16 @@
 package com.capstone.joonggo.service;
 
+import com.capstone.joonggo.domain.LoginType;
 import com.capstone.joonggo.domain.Member;
+import com.capstone.joonggo.domain.Role;
+import com.capstone.joonggo.dto.MemberJoinDto;
 import com.capstone.joonggo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -15,14 +18,22 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /**
      * 회원 가입
      */
+//    @Transactional
+//    public Long join(Member member) {
+//        Member savedMember = memberRepository.save(member);
+//        return member.getId();
+//    }
     @Transactional
-    public Long join(Member member) {
-        Member savedMember = memberRepository.save(member);
-        return member.getId();
+    public Long join(MemberJoinDto memberJoinDto) {
+        return memberRepository.save(Member.createMember(memberJoinDto.getEmail(),
+                bCryptPasswordEncoder.encode(memberJoinDto.getPassword()),
+                memberJoinDto.getNickName(), memberJoinDto.getName(), memberJoinDto.getStudentId(),
+                Role.ROLE_USER, LoginType.NORMAL)).getId();
     }
 
     /**
@@ -41,8 +52,8 @@ public class MemberService {
         return member;
     }
 
-    public Member findByLoginId(String loginId) {
-        Member member = memberRepository.findByLoginId(loginId).get();
+    public Member findByEmail(String email) {
+        Member member = memberRepository.findByEmail(email).get();
         return member;
     }
 

@@ -1,8 +1,6 @@
 package com.capstone.joonggo;
 
-import com.capstone.joonggo.domain.Comment;
-import com.capstone.joonggo.domain.Member;
-import com.capstone.joonggo.domain.Post;
+import com.capstone.joonggo.domain.*;
 import com.capstone.joonggo.service.CommentService;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
@@ -28,7 +26,7 @@ public class InitDb {
     static class InitService {
         private final EntityManager em;
         private final CommentService commentService;
-
+        /*
         public void dbInit() {
             Member member1 = Member.createMember("test1", "test", "test1", "test", 123);
             Member member2 = Member.createMember("test2", "test", "test2", "test", 124);
@@ -54,10 +52,13 @@ public class InitDb {
             em.persist(comment3);
         }
 
+         */
+
         public void dbInit2() {
             for (int i = 1; i <= 1; i++) {
                 // 멤버 생성
-                Member member = Member.createMember("test" + i, "test", "test" + i, "test", 120 + i);
+                Member member = Member.createMember("test" + i + "@test.com", "test", "test" + i, "test", 120 + i,
+                        Role.ROLE_USER, LoginType.NORMAL);
                 em.persist(member);
                 // 글 생성
                 for (int j = 1; j <= 1000; j++) {

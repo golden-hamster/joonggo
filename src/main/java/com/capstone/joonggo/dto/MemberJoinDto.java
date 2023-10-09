@@ -7,7 +7,7 @@ import lombok.Data;
 public class MemberJoinDto {
 
     @NotBlank
-    private String loginId;
+    private String email;
 
     @NotBlank
     private String password;
@@ -19,8 +19,6 @@ public class MemberJoinDto {
     private String name;
 
     private Integer studentId;
-
-    private String email;
 
 
 }

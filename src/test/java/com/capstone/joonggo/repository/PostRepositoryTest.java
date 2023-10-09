@@ -1,7 +1,9 @@
 package com.capstone.joonggo.repository;
 
+import com.capstone.joonggo.domain.LoginType;
 import com.capstone.joonggo.domain.Member;
 import com.capstone.joonggo.domain.Post;
+import com.capstone.joonggo.domain.Role;
 import com.capstone.joonggo.service.MemberService;
 import com.capstone.joonggo.service.PostService;
 import org.assertj.core.api.Assertions;
@@ -23,7 +25,7 @@ public class PostRepositoryTest {
 
     @Test
     void update() {
-        Member member = Member.createMember("123", "123", "123", "123", 123);
+        Member member = Member.createMember("123", "123", "123", "123", 123, Role.ROLE_USER, LoginType.NORMAL);
 
         Post post = Post.createPost(member, "testTitle", "test", 10000, null);
 

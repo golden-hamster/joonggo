@@ -13,12 +13,12 @@ public class LoginService {
 
     private final MemberRepository memberRepository;
 
-    public Member login(String loginId, String password) {
+    public Member login(String email, String password) {
 
-        Optional<Member> byLoginId = memberRepository.findByLoginId(loginId);
-        if (byLoginId.isPresent()) {
+        Optional<Member> byEmail = memberRepository.findByEmail(email);
+        if (byEmail.isPresent()) {
             // 조회 결과가 있을 시(해당 아이디를 가진 회원 정보가 있다)
-            Member member = byLoginId.get();
+            Member member = byEmail.get();
             if (member.getPassword().equals(password)) {
                 // 비밀번호 일치
                 return member;
@@ -31,7 +31,7 @@ public class LoginService {
             return null;
         }
 
-//        return memberRepository.findByLoginId(loginId)
+//        return memberRepository.findByLoginId(email)
 //                .filter(m -> m.getPassword().equals(password))
 //                .orElse(null);
     }

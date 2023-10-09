@@ -5,13 +5,11 @@ import com.capstone.joonggo.dto.LoginDto;
 import com.capstone.joonggo.service.LoginService;
 import com.capstone.joonggo.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +35,7 @@ public class LoginController {
             return "login";
         }
 
-        Member member = loginService.login(loginDto.getLoginId(), loginDto.getPassword());
+        Member member = loginService.login(loginDto.getEmail(), loginDto.getPassword());
 
         if (member == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다");

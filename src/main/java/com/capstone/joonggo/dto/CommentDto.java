@@ -12,17 +12,17 @@ public class CommentDto {
 
     public String author;
 
-    public String loginId;
+    public String email;
 
     @NotBlank
     public String content;
 
     public LocalDateTime createdDate;
 
-    public CommentDto(Long commentId, String author, String loginId, String content, LocalDateTime createdTime) {
+    public CommentDto(Long commentId, String author, String email, String content, LocalDateTime createdTime) {
         this.commentId = commentId;
         this.author = author;
-        this.loginId = loginId;
+        this.email = email;
         this.content = content;
         this.createdDate = createdTime;
     }
