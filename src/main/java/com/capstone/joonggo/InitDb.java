@@ -5,6 +5,7 @@ import com.capstone.joonggo.service.CommentService;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ public class InitDb {
     static class InitService {
         private final EntityManager em;
         private final CommentService commentService;
+        private final BCryptPasswordEncoder bCryptPasswordEncoder;
         /*
         public void dbInit() {
             Member member1 = Member.createMember("test1", "test", "test1", "test", 123);
@@ -57,7 +59,7 @@ public class InitDb {
         public void dbInit2() {
             for (int i = 1; i <= 1; i++) {
                 // 멤버 생성
-                Member member = Member.createMember("test" + i + "@test.com", "test", "test" + i, "test", 120 + i,
+                Member member = Member.createMember("test" + i + "@test.com", bCryptPasswordEncoder.encode("test"), "test" + i, "test", 120 + i,
                         Role.ROLE_USER, LoginType.NORMAL);
                 em.persist(member);
                 // 글 생성

@@ -29,6 +29,15 @@
     <form id="logout-form" action="/logout" method="post">
         <button type="submit" class="btn btn-primary">로그아웃</button>
     </form>
+    <!-- 로그인 버튼을 비로그인 사용자에게 보여줍니다 -->
+<!--    <form id="login-form" action="/login" method="post" th:unless="${#authorization.expression('isAuthenticated()')}">-->
+<!--        <button type="submit" class="btn btn-primary">로그인</button>-->
+<!--    </form>-->
+    <!-- 로그아웃 버튼을 로그인한 사용자에게 보여줍니다 -->
+<!--    <form id="logout-form" action="/logout" method="post" th:if="${#authorization.expression('isAuthenticated()')}">-->
+<!--        <button type="submit" class="btn btn-primary">로그아웃</button>-->
+<!--    </form>-->
+
     <div class="row text-center">
         <div class="col-6">
             <!--            <button onclick="location.href='/market/create'">상품 등록 하기</button>-->

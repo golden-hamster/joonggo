@@ -7,6 +7,7 @@ import com.capstone.joonggo.dto.MemberJoinDto;
 import com.capstone.joonggo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +19,7 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 회원 가입
@@ -31,7 +32,7 @@ public class MemberService {
     @Transactional
     public Long join(MemberJoinDto memberJoinDto) {
         return memberRepository.save(Member.createMember(memberJoinDto.getEmail(),
-                bCryptPasswordEncoder.encode(memberJoinDto.getPassword()),
+                passwordEncoder.encode(memberJoinDto.getPassword()),
                 memberJoinDto.getNickName(), memberJoinDto.getName(), memberJoinDto.getStudentId(),
                 Role.ROLE_USER, LoginType.NORMAL)).getId();
     }

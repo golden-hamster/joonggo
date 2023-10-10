@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,7 +45,8 @@ public class MarketController {
 
     @GetMapping("/market")
     public String market(@ModelAttribute PostSearch search, Model model,
-                         @PageableDefault(page = 0, size = 20, direction = Sort.Direction.DESC)Pageable pageable) {
+                         @PageableDefault(page = 0, size = 20, direction = Sort.Direction.DESC)Pageable pageable,
+                         @AuthenticationPrincipal Member member) {
         Page<Post> posts = postService.findAll(search, pageable);
 
         List<MarketDto> marketDtoList = new ArrayList<>();
@@ -153,8 +155,8 @@ public class MarketController {
             UploadFile uploadFile = uploadFiles.get(0);
              thumbnailName = uploadFile.getStoreName();
         } else {
-//            thumbnailName = "default.png";
-            thumbnailName = "default.jpg";
+            thumbnailName = "default.png";
+//            thumbnailName = "default.jpg";
         }
 
         return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName,post.getCreatedDate());
