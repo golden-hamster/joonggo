@@ -2,6 +2,7 @@ package com.capstone.joonggo.repository;
 
 import com.capstone.joonggo.domain.Post;
 import com.capstone.joonggo.search.PostSearch;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -9,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.capstone.joonggo.domain.QPost.*;
@@ -45,6 +48,7 @@ public class PostQueryRepository {
                 .where(
                         likeTitle(search.getTitle())
                 )
+                .orderBy(post.createdDate.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -64,5 +68,6 @@ public class PostQueryRepository {
         }
         return null;
     }
+
 
 }
