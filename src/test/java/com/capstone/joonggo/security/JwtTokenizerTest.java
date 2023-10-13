@@ -1,14 +1,19 @@
 package com.capstone.joonggo.security;
 
+import com.nimbusds.jwt.JWT;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ClaimsBuilder;
+import io.jsonwebtoken.JwtParserBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +31,7 @@ public class JwtTokenizerTest {
         String email = "testEmail@test.com";
         List<String> roles = List.of("ROLE_USER"); // [ "ROLE_USER" ]
         Long id = 1L;
+
         ClaimsBuilder claims = Jwts.claims().subject(email);// JWT 토큰의 payload 에 들어갈 내용(claims)을 설정
         claims.add("roles", roles);
         claims.add("memberId", id);
@@ -47,7 +53,26 @@ public class JwtTokenizerTest {
     @Test
     public void parseToken() throws Exception {
         byte[] accessSecret = this.accessSecret.getBytes(StandardCharsets.UTF_8);
-        String jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0RW1haWxAdGVzdC5jb20iLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwibWVtYmVySWQiOjEsImlhdCI6MTY5NzA5ODA3NywiZXhwIjoxNjk3MDk5ODc3fQ.6N5zcM_dRv2sLceX2IZ58m9lMOagHM2NiPToVxl522M";
+        String jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0RW1haWxAdGVzdC5jb20iLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwibWVtYmVySWQiOjEsImlhdCI6MTY5NzE5MTQxNiwiZXhwIjoxNjk3MTkzMjE2fQ.vM90KwMHUM0hPr6CthV61Q0pa8o7GSvFauAqr49xzrA";
+
+        // deprecated
+        Claims claims = Jwts.parser()
+                .setSigningKey(Keys.hmacShaKeyFor(accessSecret))
+                .build()
+                .parseClaimsJws(jwtToken)
+                .getBody();
+
+        Claims payload = Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(accessSecret))
+                .build()
+                .parseSignedClaims(jwtToken)
+                .getPayload();
+        System.out.println("jwtToken = " + claims.get("memberId"));
+        System.out.println("payload = " + payload.get("memberId"));
+        System.out.println("payload.getIssuedAt() = " + payload.getIssuedAt());
+        System.out.println("payload.getExpiration() = " + payload.getExpiration());
+
+//        Claims claims = Jwts.parser().decryptWith(Keys.hmacShaKeyFor(accessSecret)).build().parseEncryptedClaims(jwtToken).getPayload();
 //        byte[] payload = Jwts.parser()
 //                .decryptWith(Keys.hmacShaKeyFor(accessSecret))
 //                .build()
