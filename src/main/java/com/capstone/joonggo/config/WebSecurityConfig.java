@@ -43,7 +43,8 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(mvc.pattern("/member/join"), mvc.pattern("/"),
-                                mvc.pattern("/market"), mvc.pattern("/images/**")).permitAll()
+                                mvc.pattern("/market"), mvc.pattern("/images/**"))
+                        .permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
@@ -57,7 +58,7 @@ public class WebSecurityConfig {
                                                                         HttpServletResponse response,
                                                                         Authentication authentication) throws IOException, ServletException {
                                         if (authentication.getPrincipal() instanceof Member) {
-                                            Member member = (Member)authentication.getPrincipal();
+                                            Member member = (Member) authentication.getPrincipal();
                                             Long memberId = member.getId();
                                             HttpSession session = request.getSession();
                                             session.setAttribute(SessionConst.LOGIN_MEMBER, memberId);

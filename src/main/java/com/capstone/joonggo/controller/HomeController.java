@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +46,11 @@ public class HomeController {
     }
 
     @PostMapping("/member/join")
-    public String join(@Valid @ModelAttribute MemberJoinDto memberJoinDto, Model model) {
+    public String join(@Valid @ModelAttribute MemberJoinDto memberJoinDto, Model model
+    , BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "joinMember";
+        }
 //        Member member = Member.createMember(memberJoinDto.getEmail(), memberJoinDto.getPassword(),
 //                memberJoinDto.getNickName(), memberJoinDto.getName(), memberJoinDto.getStudentId(),
 //                Role.ROLE_USER, LoginType.NORMAL);
