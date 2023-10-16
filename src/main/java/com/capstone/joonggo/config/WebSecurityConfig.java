@@ -32,6 +32,8 @@ import java.io.IOException;
 public class WebSecurityConfig {
 
     private final MemberDetailService memberDetailService;
+
+
 //    @Bean // 스프링 시큐리티 기능 비활성화
 //    public WebSecurityCustomizer webSecurityCustomizer() {
 //        return (web) -> web.ignoring().requestMatchers("/static/**");

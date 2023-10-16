@@ -49,12 +49,12 @@ public class MemberService {
      * 회원 조회
      */
     public Member findById(Long id) {
-        Member member = memberRepository.findById(id).get();
+        Member member = memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다"));
         return member;
     }
 
     public Member findByEmail(String email) {
-        Member member = memberRepository.findByEmail(email).get();
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다"));
         return member;
     }
 
