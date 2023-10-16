@@ -59,16 +59,6 @@ public class LoginController {
         return "redirect:/market";
     }
 
-//    @PostMapping("/login")
-    public String loginSuccess(@AuthenticationPrincipal UserDetails userDetails, HttpServletRequest request) {
-        log.info("================loginSuccess============");
-        String email = userDetails.getUsername();
-        Member member = memberService.findByEmail(email);
-        HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER, member.getId());
-        return "redirect:/market";
-    }
-
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
         //세션 삭제

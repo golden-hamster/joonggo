@@ -51,12 +51,7 @@ public class HomeController {
         if (bindingResult.hasErrors()) {
             return "joinMember";
         }
-//        Member member = Member.createMember(memberJoinDto.getEmail(), memberJoinDto.getPassword(),
-//                memberJoinDto.getNickName(), memberJoinDto.getName(), memberJoinDto.getStudentId(),
-//                Role.ROLE_USER, LoginType.NORMAL);
         memberService.join(memberJoinDto);
-//        model.addAttribute("memberName", member.getName());
-//        model.addAttribute("email", member.getEmail());
         return "redirect:/";
 
     }
