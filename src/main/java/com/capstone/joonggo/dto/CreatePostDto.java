@@ -1,5 +1,6 @@
 package com.capstone.joonggo.dto;
 
+import com.capstone.joonggo.domain.PostStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -20,6 +21,10 @@ public class CreatePostDto {
 
     @NotBlank
     private String content;
+
+    private Long memberId;
+
+    private PostStatus postStatus;
 
     private List<MultipartFile> imageFiles;
 }

@@ -59,7 +59,7 @@ public class LoginController {
         return "redirect:/market";
     }
 
-    @PostMapping("/logout")
+//    @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
         //세션 삭제
         HttpSession session = request.getSession();

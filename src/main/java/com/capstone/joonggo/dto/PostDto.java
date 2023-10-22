@@ -1,12 +1,20 @@
 package com.capstone.joonggo.dto;
 
+import com.capstone.joonggo.domain.Post;
+import com.capstone.joonggo.domain.PostStatus;
+import com.capstone.joonggo.domain.UploadFile;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class PostDto {
+
+    public Long postId;
+
+    public String email;
 
     public String title;
 
@@ -20,6 +28,10 @@ public class PostDto {
 
     public LocalDateTime createdTime;
 
+    public Boolean authorFlag;
+
+    public PostStatus postStatus;
+
     public PostDto(String title, String nickName, Integer price, String content, List<String> storeNames, LocalDateTime createdTime) {
         this.title = title;
         this.nickName = nickName;
@@ -27,5 +39,17 @@ public class PostDto {
         this.content = content;
         this.storeFileNames = storeNames;
         this.createdTime = createdTime;
+    }
+
+    public PostDto(Post post) {
+        postId = post.getId();
+        email = post.getMember().getEmail();
+        title = post.getTitle();
+        nickName = post.getMember().getNickName();
+        price = post.getPrice();
+        content = post.getContent();
+        storeFileNames = post.getUploadFiles().stream()
+                .map(UploadFile::getStoreName)
+                .collect(Collectors.toList());
     }
 }

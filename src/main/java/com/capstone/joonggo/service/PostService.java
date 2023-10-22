@@ -1,7 +1,11 @@
 package com.capstone.joonggo.service;
 
+import com.capstone.joonggo.domain.Member;
 import com.capstone.joonggo.domain.Post;
+import com.capstone.joonggo.domain.PostStatus;
 import com.capstone.joonggo.domain.UploadFile;
+import com.capstone.joonggo.dto.CreatePostDto;
+import com.capstone.joonggo.repository.MemberRepository;
 import com.capstone.joonggo.repository.PostQueryRepository;
 import com.capstone.joonggo.repository.PostRepository;
 import com.capstone.joonggo.search.PostSearch;
@@ -19,14 +23,24 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final MemberRepository memberRepository;
     private final PostQueryRepository postQueryRepository;
 
 
-    @Transactional
-    public Long save(Post post) {
+    public Long saveTest(Post post) {
         postRepository.save(post);
         return post.getId();
     }
+
+    @Transactional
+    public Long save(CreatePostDto createPostDto, List<UploadFile> uploadFiles) {
+        Member member = memberRepository.findById(createPostDto.getMemberId()).get();
+        Post post = Post.createPost(member, createPostDto.getTitle(), createPostDto.getTitle(), createPostDto.getPrice(),
+                PostStatus.SALE, uploadFiles);
+        return postRepository.save(post).getId();
+    }
+
+
 
     @Transactional
     public void delete(Long postId) {

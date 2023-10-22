@@ -63,11 +63,8 @@ public class MarketController {
                            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Long memberId,
                            Model model) {
         Post post = postService.findById(postId);
-        Member member = memberService.findById(memberId);
 
         boolean authorFlag = post.getMember().getId().equals(memberId);
-
-        boolean loginMemberFlag = (memberId != null);
 
         List<Comment> comments = commentService.findByPostId(postId);
         List<CommentDto> commentDtoList = new ArrayList<>();
@@ -76,15 +73,10 @@ public class MarketController {
             commentDtoList.add(commentDto);
         }
 
-        String email = member.getEmail();
-
-        PostDto postDto = convertToPostDto(post);
+        PostDto postDto = new PostDto(post);
         model.addAttribute("post", postDto);
-        model.addAttribute("postId", postId);
         model.addAttribute("comments", commentDtoList);
-        model.addAttribute("email", email);
         model.addAttribute("authorFlag", authorFlag);
-        model.addAttribute("loginMemberFlag", loginMemberFlag);
 
         return "post";
     }
@@ -113,9 +105,8 @@ public class MarketController {
 
         List<UploadFile> uploadFiles = uploadFileService.saveFiles(createPostDto.getImageFiles());
         Member member = memberService.findById(memberId);
-        Post post = Post.createPost(member, createPostDto.getTitle(), createPostDto.getContent(), createPostDto.getPrice(), uploadFiles);
-        Long postId = postService.save(post);
-
+        createPostDto.setMemberId(memberId);
+        Long postId = postService.save(createPostDto, uploadFiles);
         redirectAttributes.addAttribute("postId", postId);
 
         return "redirect:/market/{postId}";
@@ -154,8 +145,8 @@ public class MarketController {
             UploadFile uploadFile = uploadFiles.get(0);
              thumbnailName = uploadFile.getStoreName();
         } else {
-            thumbnailName = "default.png";
-//            thumbnailName = "default.jpg";
+//            thumbnailName = "default.png";
+            thumbnailName = "default.jpg";
         }
 
         return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName,post.getCreatedDate());

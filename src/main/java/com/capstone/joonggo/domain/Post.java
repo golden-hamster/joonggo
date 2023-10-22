@@ -40,13 +40,14 @@ public class Post {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UploadFile> uploadFiles;
 
-    public static Post createPost(Member member, String title, String content, Integer price, List<UploadFile> uploadFiles) {
+    public static Post createPost(Member member, String title, String content, Integer price, PostStatus postStatus,List<UploadFile> uploadFiles) {
         Post post = new Post();
         post.member = member;
         post.title = title;
         post.content = content;
         post.price = price;
         post.uploadFiles = uploadFiles;
+        post.postStatus = postStatus;
         post.createdDate = LocalDateTime.now();
         return  post;
     }
