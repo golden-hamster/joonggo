@@ -1,9 +1,6 @@
 package com.capstone.joonggo.controller;
 
-import com.capstone.joonggo.domain.Comment;
-import com.capstone.joonggo.domain.Member;
-import com.capstone.joonggo.domain.Post;
-import com.capstone.joonggo.domain.UploadFile;
+import com.capstone.joonggo.domain.*;
 import com.capstone.joonggo.dto.*;
 import com.capstone.joonggo.search.PostSearch;
 import com.capstone.joonggo.service.CommentService;
@@ -138,6 +135,13 @@ public class MarketController {
         return "redirect:/market/" + postId;
     }
 
+    @PostMapping("/market/updateStatus")
+    public String updatePostStatus(Long postId, RedirectAttributes redirectAttributes) {
+        postService.updateStatus(postId, PostStatus.COMPLETED);
+        redirectAttributes.addAttribute("postId", postId);
+        return "redirect:/market/{postId}";
+    }
+
     public MarketDto convertToMarketDto(Post post) {
         List<UploadFile> uploadFiles = post.getUploadFiles();
         String thumbnailName = null;
@@ -145,8 +149,8 @@ public class MarketController {
             UploadFile uploadFile = uploadFiles.get(0);
              thumbnailName = uploadFile.getStoreName();
         } else {
-//            thumbnailName = "default.png";
-            thumbnailName = "default.jpg";
+            thumbnailName = "default.png";
+//            thumbnailName = "default.jpg";
         }
 
         return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName,post.getCreatedDate());

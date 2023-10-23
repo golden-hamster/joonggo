@@ -2,7 +2,6 @@ package com.capstone.joonggo.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.hibernate.annotations.Fetch;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,19 +34,20 @@ public class Post {
 
     private LocalDateTime createdDate;
 
-    private PostStatus postStatus;
+    @Enumerated(EnumType.STRING)
+    private PostStatus status;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UploadFile> uploadFiles;
 
-    public static Post createPost(Member member, String title, String content, Integer price, PostStatus postStatus,List<UploadFile> uploadFiles) {
+    public static Post createPost(Member member, String title, String content, Integer price, PostStatus status,List<UploadFile> uploadFiles) {
         Post post = new Post();
         post.member = member;
         post.title = title;
         post.content = content;
         post.price = price;
         post.uploadFiles = uploadFiles;
-        post.postStatus = postStatus;
+        post.status = status;
         post.createdDate = LocalDateTime.now();
         return  post;
     }
@@ -57,5 +57,9 @@ public class Post {
         this.content = content;
         this.price = price;
         this.uploadFiles = uploadFiles;
+    }
+
+    public void updateStatus(PostStatus status) {
+        this.status = status;
     }
 }

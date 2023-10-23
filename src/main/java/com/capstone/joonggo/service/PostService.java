@@ -72,4 +72,10 @@ public class PostService {
         Post post = postRepository.findById(postId).orElse(null);
         post.update(title, content, price, uploadFiles);
     }
+
+    @Transactional
+    public void updateStatus(Long postId,PostStatus status) {
+        Post post = postRepository.findById(postId).orElse(null);
+        post.updateStatus(status);
+    }
 }
