@@ -2,6 +2,7 @@ package com.capstone.joonggo.controller;
 
 import com.capstone.joonggo.domain.Member;
 import com.capstone.joonggo.dto.LoginDto;
+import com.capstone.joonggo.repository.MemberRepository;
 import com.capstone.joonggo.service.LoginService;
 import com.capstone.joonggo.service.MemberService;
 import com.capstone.joonggo.session.SessionConst;
@@ -16,10 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,7 +29,7 @@ public class LoginController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
-    public String loginForm() {
+    public String loginForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)Long memberId) {
         return "login1";
     }
 

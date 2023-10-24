@@ -50,6 +50,7 @@ public class MemberService {
      */
     public Member findById(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다"));
+        memberRepository.findById(id).orElse(null);
         return member;
     }
 

@@ -149,8 +149,8 @@ public class MarketController {
             UploadFile uploadFile = uploadFiles.get(0);
              thumbnailName = uploadFile.getStoreName();
         } else {
-            thumbnailName = "default.png";
-//            thumbnailName = "default.jpg";
+//            thumbnailName = "default.png";
+            thumbnailName = "default.jpg";
         }
 
         return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName,post.getCreatedDate());

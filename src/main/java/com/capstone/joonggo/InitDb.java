@@ -64,7 +64,7 @@ public class InitDb {
                 em.persist(member);
                 // 글 생성
                 for (int j = 1; j <= 1000; j++) {
-                    Post post = Post.createPost(member, "Test title" + j, "content is...", 15000 + (j * 1000), null, null);
+                    Post post = Post.createPost(member, "Test title" + j, "content is...", 15000 + (j * 1000), PostStatus.SALE, null);
                     em.persist(post);
 
                     // 댓글 생성

@@ -30,7 +30,7 @@ public class PostDto {
 
     public Boolean authorFlag;
 
-    public PostStatus postStatus;
+    public PostStatus status;
 
     public PostDto(String title, String nickName, Integer price, String content, List<String> storeNames, LocalDateTime createdTime) {
         this.title = title;
@@ -51,5 +51,6 @@ public class PostDto {
         storeFileNames = post.getUploadFiles().stream()
                 .map(UploadFile::getStoreName)
                 .collect(Collectors.toList());
+        status = post.getStatus();
     }
 }
