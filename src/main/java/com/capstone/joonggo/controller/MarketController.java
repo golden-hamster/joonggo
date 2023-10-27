@@ -50,6 +50,7 @@ public class MarketController {
             MarketDto marketDto = convertToMarketDto(post);
             marketDtoList.add(marketDto);
         }
+
         model.addAttribute("posts", marketDtoList);
         model.addAttribute("paging", posts);
         return "market";

@@ -59,5 +59,9 @@ public class MemberService {
         return member;
     }
 
+    public Member findByNickName(String nickName) {
+        Member member = memberRepository.findByNickName(nickName).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다"));
+        return member;
+    }
 
 }
