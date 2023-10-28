@@ -91,7 +91,7 @@ public class HomeController {
             thumbnailName = "default.jpg";
         }
 
-        return null;
+        return new MemberPostDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName, post.getStatus(), post.getCreatedDate());
 
     }
 }

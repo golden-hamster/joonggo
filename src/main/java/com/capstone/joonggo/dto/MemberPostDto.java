@@ -20,4 +20,12 @@ public class MemberPostDto {
 
     private LocalDateTime createdDate;
 
+    public MemberPostDto(String title, Integer price, Long postId, String thumbnailName, PostStatus status, LocalDateTime createdDate) {
+        this.title = title;
+        this.price = price;
+        this.postId = postId;
+        this.thumbnailName = thumbnailName;
+        this.status = status;
+        this.createdDate = createdDate;
+    }
 }

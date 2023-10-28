@@ -11,24 +11,35 @@
         a{
        text-decoration: none;
        }
-
+        nav{
+        white-space:nowrap;
+        text-align: center;
+        }
+        .card{
+        margin-bottom: 56px;
+        border-width: 0px;
+      }
+      .my-c1{
+        margin-bottom: 28px;
+      }
     </style>
 </head>
 <body>
 <div class="container">
     <div>
-        <h1 class="text-center"><a href="/market">UNISWAP</a></h1>
+        <h1 class="m-5 text-center"><a href="/market">UNISWAP</a></h1>
     </div>
-        <div class="row">
-            <form class="col" id="logout-form" action="/logout" method="post" sec:authorize="isAuthenticated()">
-                <button type="submit" class="btn btn-primary">로그아웃</button>
-            </form>
-            <h2 class="col" th:text="${member.nickName}">닉네임</h2>
-            <a class="col-3 my-page btn btn-primary" th:href="|/member/${member.nickName}|"
-               th:text="${member.nickName}">마이페이지</a>
-        </div>
+    <div class="mb-4 row">
+        <form class="col" id="logout-form" action="/logout" method="post" sec:authorize="isAuthenticated()">
+            <button type="submit" class="btn btn-primary">로그아웃</button>
+        </form>
+        <h2 class="col" th:text="|${member.nickName}님의 페이지|">닉네임</h2>
+        <a class="col-2 my-page btn btn-primary" th:href="|/member/${member.nickName}|"
+           th:text="마이페이지">마이페이지</a>
+    </div>
     <div class="row text-center mx-auto">
-        <a th:each="post : ${posts}" class="card col-3" style="width: 18rem;" th:href="@{~/market/{postId}(postId=${post.postId})}">
+        <a th:each="post : ${posts}" class="card col-3" style="width: 18rem;"
+           th:href="@{~/market/{postId}(postId=${post.postId})}">
             <img th:src="|/images/${post.thumbnailName}|" class="card-img-top rounded-5" alt="...">
             <div class="card-body">
                 <h5 class="card-title" th:text="${post.title}">Card title</h5>
