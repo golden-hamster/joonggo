@@ -1,6 +1,7 @@
 package com.capstone.joonggo.repository;
 
 import com.capstone.joonggo.domain.Post;
+import com.capstone.joonggo.domain.QPost;
 import com.capstone.joonggo.search.PostSearch;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -57,6 +58,22 @@ public class PostQueryRepository {
                 .where(
                         likeTitle(search.getTitle())
                 )
+                .fetchCount();
+
+        return new PageImpl<>(posts, pageable, total);
+    }
+
+    public Page<Post> findByNickName(String nickName, Pageable pageable) {
+        List<Post> posts = query.select(post)
+                .from(post)
+                .where(post.member.nickName.eq(nickName))
+                .orderBy(post.createdDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = query.selectFrom(post)
+                .where(post.member.nickName.eq(nickName))
                 .fetchCount();
 
         return new PageImpl<>(posts, pageable, total);

@@ -60,8 +60,8 @@ public class PostService {
         return postQueryRepository.findAll(search, pageable);
     }
 
-    public List<Post> findByNickName(String nickName) {
-        return postRepository.findByMemberNickName(nickName);
+    public Page<Post> findByNickName(String nickName, Pageable pageable) {
+        return postQueryRepository.findByNickName(nickName, pageable);
     }
     
     @Transactional

@@ -1,22 +1,18 @@
 package com.capstone.joonggo.dto;
 
+import com.capstone.joonggo.domain.Member;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 public class MemberDto {
 
     private String nickName;
 
-    private String title;
+    public MemberDto(Member member) {
+        nickName = member.getNickName();
+    }
 
-    private Integer price;
-
-    private Long postId;
-
-    private String thumbnailName;
-
-    private LocalDateTime createdDate;
-
+    public MemberDto(String nickName) {
+        this.nickName = nickName;
+    }
 }

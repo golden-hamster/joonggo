@@ -42,8 +42,14 @@ public class MarketController {
 
     @GetMapping("/market")
     public String market(@ModelAttribute PostSearch search, Model model,
-                         @PageableDefault(page = 0, size = 20, direction = Sort.Direction.DESC)Pageable pageable) {
+                         @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Long memberId,
+                         @PageableDefault(page = 0, size = 20, direction = Sort.Direction.DESC) Pageable pageable) {
+        Member member = null;
         Page<Post> posts = postService.findAll(search, pageable);
+        if (memberId != null) {
+            member = memberService.findById(memberId);
+        }
+        MemberDto memberDto = member != null ? new MemberDto(member) : null;
 
         List<MarketDto> marketDtoList = new ArrayList<>();
         for (Post post : posts) {
@@ -51,6 +57,8 @@ public class MarketController {
             marketDtoList.add(marketDto);
         }
 
+
+        model.addAttribute("member", memberDto);
         model.addAttribute("posts", marketDtoList);
         model.addAttribute("paging", posts);
         return "market";
@@ -93,7 +101,7 @@ public class MarketController {
     }
 
     @PostMapping("/market/create")
-    public String createPost(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Long memberId ,
+    public String createPost(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Long memberId,
                              @Valid @ModelAttribute CreatePostDto createPostDto,
                              BindingResult bindingResult, RedirectAttributes redirectAttributes) throws IOException {
 
@@ -148,19 +156,19 @@ public class MarketController {
         String thumbnailName = null;
         if (uploadFiles != null && !uploadFiles.isEmpty()) {
             UploadFile uploadFile = uploadFiles.get(0);
-             thumbnailName = uploadFile.getStoreName();
+            thumbnailName = uploadFile.getStoreName();
         } else {
 //            thumbnailName = "default.png";
             thumbnailName = "default.jpg";
         }
 
-        return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName,post.getCreatedDate());
+        return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName, post.getCreatedDate());
     }
 
     public CommentDto convertToCommentDto(Comment comment) {
         String author = comment.getMember().getNickName();
         String email = comment.getMember().getEmail();
-        return new CommentDto(comment.getId(),author, email, comment.getContent(), comment.getCreatedDate());
+        return new CommentDto(comment.getId(), author, email, comment.getContent(), comment.getCreatedDate());
     }
 
 
@@ -174,4 +182,5 @@ public class MarketController {
         }
         return new PostDto(post.getTitle(), nickName, post.getPrice(), post.getContent(), storeNames, post.getCreatedDate());
     }
+
 }

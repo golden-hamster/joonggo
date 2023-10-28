@@ -1,9 +1,6 @@
 package com.capstone.joonggo.repository;
 
-import com.capstone.joonggo.domain.LoginType;
-import com.capstone.joonggo.domain.Member;
-import com.capstone.joonggo.domain.Post;
-import com.capstone.joonggo.domain.Role;
+import com.capstone.joonggo.domain.*;
 import com.capstone.joonggo.dto.CreatePostDto;
 import com.capstone.joonggo.service.MemberService;
 import com.capstone.joonggo.service.PostService;
@@ -13,32 +10,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 @SpringBootTest
 public class PostRepositoryTest {
 
     @Autowired
-    PostService postService;
+    PostRepository postRepository;
     @Autowired
-    MemberService memberService;
-
-/**
+    MemberRepository memberRepository;
 
     @Test
-    void update() {
-        Member member = Member.createMember("123", "123", "123", "123", 123, Role.ROLE_USER, LoginType.NORMAL);
+    void findByMemberNickNameTest() {
+        Member member = Member.createMember("t123@test.com", "123", "nick", "nick", 12421, null, null);
+        memberRepository.save(member);
 
-        Post post = Post.createPost(member, "testTitle", "test", 10000, null, null);
+        Post post = Post.createPost(member, "test-title", "content", 150000, PostStatus.SALE, null);
+        postRepository.save(post);
 
-        Long postId = postService.save(post, null);
-
-        Assertions.assertThat(post.getPrice()).isEqualTo(10000);
-
-        postService.update(postId, "updateTitle", "updateContent", 15000, null);
-
-        Assertions.assertThat(post.getPrice()).isEqualTo(15000);
-
+        List<Post> byMemberNickName = postRepository.findByMemberNickName(member.getNickName());
+        Assertions.assertThat(byMemberNickName.get(0)).isEqualTo(post);
     }
-
- */
 }

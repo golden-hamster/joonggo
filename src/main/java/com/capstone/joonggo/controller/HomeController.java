@@ -1,14 +1,18 @@
 package com.capstone.joonggo.controller;
 
 import com.capstone.joonggo.domain.*;
-import com.capstone.joonggo.dto.MarketDto;
 import com.capstone.joonggo.dto.MemberDto;
+import com.capstone.joonggo.dto.MemberPostDto;
 import com.capstone.joonggo.dto.MemberJoinDto;
 import com.capstone.joonggo.service.MemberService;
 import com.capstone.joonggo.service.PostService;
 import com.capstone.joonggo.session.SessionConst;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,20 +62,25 @@ public class HomeController {
     }
 
     @GetMapping("/member/{nickName}")
-    public String memberPage(@PathVariable String nickName) {
+    public String memberPage(@PathVariable String nickName, Model model,
+                             @PageableDefault(page = 0, size = 20, direction = Sort.Direction.DESC)Pageable pageable) {
         Member member = memberService.findByNickName(nickName);
-        List<Post> posts = postService.findByNickName(nickName);
+        Page<Post> posts = postService.findByNickName(nickName, pageable);
 
-        List<MemberDto> memberDtoList = new ArrayList<>();
+        List<MemberPostDto> memberPostDtoList = new ArrayList<>();
         for (Post post : posts) {
-            MemberDto memberDto = convertToMemberDto(post);
-            memberDtoList.add(memberDto);
+            MemberPostDto memberDto = convertToMemberDto(post);
+            memberPostDtoList.add(memberDto);
         }
+        MemberDto memberDto = new MemberDto(nickName);
+
+        model.addAttribute("posts", memberPostDtoList);
+        model.addAttribute("member", memberDto);
 
         return "member";
     }
 
-    public MemberDto convertToMemberDto(Post post) {
+    public MemberPostDto convertToMemberDto(Post post) {
         List<UploadFile> uploadFiles = post.getUploadFiles();
         String thumbnailName = null;
         if (uploadFiles != null && !uploadFiles.isEmpty()) {

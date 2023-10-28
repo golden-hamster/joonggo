@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>회원 로그인</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        a{
+       text-decoration: none;
+       }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div>
+        <h1 class="text-center"><a href="/market">UNISWAP</a></h1>
+    </div>
+        <div class="row">
+            <form class="col" id="logout-form" action="/logout" method="post" sec:authorize="isAuthenticated()">
+                <button type="submit" class="btn btn-primary">로그아웃</button>
+            </form>
+            <h2 class="col" th:text="${member.nickName}">닉네임</h2>
+            <a class="col-3 my-page btn btn-primary" th:href="|/member/${member.nickName}|"
+               th:text="${member.nickName}">마이페이지</a>
+        </div>
+    <div class="row text-center mx-auto">
+        <a th:each="post : ${posts}" class="card col-3" style="width: 18rem;" th:href="@{~/market/{postId}(postId=${post.postId})}">
+            <img th:src="|/images/${post.thumbnailName}|" class="card-img-top rounded-5" alt="...">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${post.title}">Card title</h5>
+                <p class="card-text" th:text="${post.price}">text</p>
+                <p class="card-text" th:text="${post.createdDate}">text</p>
+            </div>
+        </a>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+</html>
