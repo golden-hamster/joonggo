@@ -1,0 +1,57 @@
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background-color: #F3EBF6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+h2 {
+    font-size: 24px;
+}
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 350px;
+}
+div {
+    margin: 10px;
+}
+
+
+label {
+    font-weight: bold;
+    display: block;
+}
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    height: 35px;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 700;
+    background: rgba(136, 126, 126, 0.04);
+    border-radius: 20px;
+}
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(to right, #9C27B0, #E040FB);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}

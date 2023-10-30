@@ -1,0 +1,183 @@
+    body {
+        background-color: #F3EBF6;
+        margin: 0;
+    }
+
+    .container {
+        background-color: rgb(255, 255, 255);
+        position: relative;
+        width: 600px; 
+        height: 520px; 
+        margin: auto;
+        border-radius: 20px;
+        box-shadow: 0px 11px 35px 8px rgba(0, 0, 0, .14);
+    }
+
+    h1{
+        font-family: 'Ubuntu', sans-serif;
+        text-align: center;
+        color: #8C55AA;
+        position: relative;
+        font-size: 50px;
+    }
+
+    h2 {
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    .form-group {
+        text-align: center;
+        top: 60px;
+    }
+
+    .tlqkf {
+        text-align: center;
+        
+    }
+
+    .tlqkf button {
+        background: #fff;
+        border: 1px solid rgb(77,77,77);
+        border-radius: 10px;
+        cursor: pointer;
+        width: 50px;
+        height: 30px;
+    }
+
+    .tlqkf button:hover {
+        background: rgb(77,77,77);
+        color: #fff;
+    }
+
+
+
+    #nav2 {
+        background-color: rgb(255, 255, 255);
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 40px;
+        box-shadow: 0px 11px 35px 5px rgba(0, 0, 0, .14);
+    }
+    
+    #nav2 a {
+        text-decoration: none;
+        color: black;
+        font-family: 'Ubuntu', sans-serif;
+    }
+    
+    #nav2 ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        width: 300px;
+    }
+    
+    #nav2 li {
+        margin: 0 10px;
+    }
+    
+    #nav2 li:last-child {
+        margin-right: 0;
+    }
+    
+    .search {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    
+    .search input {
+        padding: 8px;
+        border: none;
+        border-radius: 4px;
+        outline: none;
+    }
+    
+    .search button {
+        background-color: #333;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+
+    .an {
+        width: 56%;
+        color: rgb(38, 50, 56);
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 1px;
+        background: rgba(206, 51, 206, 0.04);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        outline: none;
+        box-sizing: border-box;
+        border: 2px solid rgba(0, 0, 0, 0.02);
+        margin-bottom: 50px;
+        text-align: center;
+        margin-bottom: 27px;
+    }
+
+    .bn {
+        width: 56%;
+        color: rgb(38, 50, 56);
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 1px;
+        background: rgba(206, 51, 206, 0.04);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        outline: none;
+        box-sizing: border-box;
+        border: 2px solid rgba(0, 0, 0, 0.02);
+        margin-bottom: 50px;
+        text-align: center;
+        margin-bottom: 27px;
+    }
+
+    .content {
+        width: 350px;
+        height: 120px;
+        color: rgb(38, 50, 56);
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 1px;
+        background: rgba(206, 51, 206, 0.04);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        outline: none;
+        box-sizing: border-box;
+        border: 2px solid rgba(0, 0, 0, 0.02);
+        margin-bottom: 20px;
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    input[type=file]::file-selector-button {
+        width: 150px;
+        height: 30px;
+        background: #fff;
+        border: 1px solid rgb(77,77,77);
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 15px;
+      }
+
+      input[type=file]::file-selector-button:hover{
+        background: rgb(77,77,77);
+        color: #fff;
+      }
+
+      #nav2 ul li a:hover {
+        background: rgb(77,77,77);
+        color: #fff;
+      }

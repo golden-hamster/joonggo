@@ -97,7 +97,7 @@ public class MarketController {
     @GetMapping("/market/create")
     public String createPostForm(Model model) {
         model.addAttribute("createPostDto", new CreatePostDto());
-        return "createPost";
+        return "createPost2";
     }
 
     @PostMapping("/market/create")
@@ -106,7 +106,7 @@ public class MarketController {
                              BindingResult bindingResult, RedirectAttributes redirectAttributes) throws IOException {
 
         if (bindingResult.hasErrors()) {
-            return "createPost";
+            return "createPost2";
         }
 
         List<UploadFile> uploadFiles = uploadFileService.saveFiles(createPostDto.getImageFiles());
@@ -123,9 +123,13 @@ public class MarketController {
                                 @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Long memberId,
                                 @Valid @ModelAttribute CommentDto commentDto,
                                 BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        Post findPost = postService.findById(postId);
-        Member findMember = memberService.findById(memberId);
-        Comment comment = Comment.createComment(findPost, findMember, commentDto.content);
+        Post post = postService.findById(postId);
+        Member member = memberService.findById(memberId);
+        Comment comment = Comment.createComment(post, member, commentDto.content);
+
+        if (post == null) {
+            return "redirect:/market";
+        }
 
         Comment savedComment = commentService.save(comment);
         redirectAttributes.addAttribute("postId", postId);
@@ -134,14 +138,23 @@ public class MarketController {
 
     @PostMapping("/market/delete")
     public String deletePost(Long postId) {
+        Post post = postService.findById(postId);
+        if (post == null) {
+            return "redirect:/market";
+        }
         postService.delete(postId);
         return "redirect:/market";
     }
 
     @PostMapping("/deleteComment")
-    public String deleteComment(Long postId, Long commentId) {
+    public String deleteComment(Long postId, Long commentId, RedirectAttributes redirectAttributes) {
         commentService.delete(commentId);
-        return "redirect:/market/" + postId;
+        Post post = postService.findById(postId);
+        if (post == null) {
+            return "redirect:/market";
+        }
+        redirectAttributes.addAttribute("postId", postId);
+        return "redirect:/market/{postId}";
     }
 
     @PostMapping("/market/updateStatus")
@@ -149,6 +162,29 @@ public class MarketController {
         postService.updateStatus(postId, PostStatus.COMPLETED);
         redirectAttributes.addAttribute("postId", postId);
         return "redirect:/market/{postId}";
+    }
+
+    @GetMapping("/market/{postId}/update")
+    public String updatePostForm(@PathVariable Long postId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long memberId,
+                                 CreatePostDto createPostDto,Model model) {
+        Member member = memberService.findById(memberId);
+        Post post = postService.findById(postId);
+        if (post.getMember() != member) {
+            return "redirect:/market";
+        }
+
+        PostDto postDto = new PostDto(post);
+
+        model.addAttribute("post", postDto);
+        return "updatePost";
+    }
+
+    @PostMapping("/market/{postId}/update")
+    public String updatePost(@PathVariable Long postId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER)Long memberId,
+                             CreatePostDto createPostDto) throws IOException {
+        List<UploadFile> uploadFiles = uploadFileService.saveFiles(createPostDto.getImageFiles());
+        postService.update(postId, createPostDto.getTitle(), createPostDto.getContent(), createPostDto.getPrice(), uploadFiles);
+        return "redirect:/market/" + postId;
     }
 
     public MarketDto convertToMarketDto(Post post) {

@@ -28,8 +28,6 @@ public class PostDto {
 
     public LocalDateTime createdTime;
 
-    public Boolean authorFlag;
-
     public PostStatus status;
 
     public PostDto(String title, String nickName, Integer price, String content, List<String> storeNames, LocalDateTime createdTime) {
