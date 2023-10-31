@@ -56,7 +56,10 @@ public class Post {
         this.title = title;
         this.content = content;
         this.price = price;
-        this.uploadFiles = uploadFiles;
+        this.uploadFiles.clear();
+        for (UploadFile uploadFile : uploadFiles) {
+            this.uploadFiles.add(uploadFile);
+        }
     }
 
     public void updateStatus(PostStatus status) {

@@ -15,7 +15,7 @@
 
     <hr width="250px">
 
-    <form th:action="@{~/market/{postId}/update(postId=${post.postId})}" th:object="${createPostDto}" method="post" enctype="multipart/form-data">
+    <form th:action="@{~/market/{postId}/update(postId=${postId})}" th:object="${createPostDto}" method="post" enctype="multipart/form-data">
 
         <div th:if="${#fields.hasGlobalErrors()}">
 
@@ -25,13 +25,13 @@
 
         <div class="form-group">
 
-            <input class="an" type="text" id="title" th:field="*{title}" placeholder="제목" th:errorclass="field-error" th:value="${post.title}" required >
+            <input class="an" type="text" id="title" th:field="*{title}" placeholder="제목" th:errorclass="field-error" th:value="${createPostDto.title}"required >
 
         </div>
 
         <div class="form-group">
 
-            <input class="bn" type="number" placeholder="가격" id="price" th:field="*{price}" th:value="${post.price}" required>
+            <input class="bn" type="number" placeholder="가격" id="price" th:field="*{price}" th:value="${createPostDto.price}" required>
 
         </div>
 
@@ -45,7 +45,7 @@
 
         <div class="form-group">
 
-            <textarea class="content" placeholder="내용" th:field="*{content}" rows="4" th:value="${post.content}" required></textarea>
+            <textarea class="content" placeholder="내용" th:field="*{content}" rows="4" th:value="${createPostDto.content}" required></textarea>
 
         </div>
 

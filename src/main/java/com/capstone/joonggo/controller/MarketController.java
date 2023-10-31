@@ -166,22 +166,27 @@ public class MarketController {
 
     @GetMapping("/market/{postId}/update")
     public String updatePostForm(@PathVariable Long postId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long memberId,
-                                 CreatePostDto createPostDto,Model model) {
+                                 Model model) {
         Member member = memberService.findById(memberId);
         Post post = postService.findById(postId);
         if (post.getMember() != member) {
             return "redirect:/market";
         }
 
-        PostDto postDto = new PostDto(post);
 
-        model.addAttribute("post", postDto);
+        CreatePostDto createPostDto = new CreatePostDto(post);
+        model.addAttribute("createPostDto", createPostDto);
+        model.addAttribute("postId", postId);
         return "updatePost";
     }
 
     @PostMapping("/market/{postId}/update")
     public String updatePost(@PathVariable Long postId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER)Long memberId,
                              CreatePostDto createPostDto) throws IOException {
+        if (!postService.findById(postId).getMember().getId().equals(memberId)) {
+            return "redirect:/market";
+        }
+
         List<UploadFile> uploadFiles = uploadFileService.saveFiles(createPostDto.getImageFiles());
         postService.update(postId, createPostDto.getTitle(), createPostDto.getContent(), createPostDto.getPrice(), uploadFiles);
         return "redirect:/market/" + postId;
@@ -194,8 +199,8 @@ public class MarketController {
             UploadFile uploadFile = uploadFiles.get(0);
             thumbnailName = uploadFile.getStoreName();
         } else {
-//            thumbnailName = "default.png";
-            thumbnailName = "default.jpg";
+            thumbnailName = "default.png";
+//            thumbnailName = "default.jpg";
         }
 
         return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName, post.getCreatedDate());
