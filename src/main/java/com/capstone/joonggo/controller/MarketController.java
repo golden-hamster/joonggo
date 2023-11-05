@@ -80,10 +80,11 @@ public class MarketController {
         }
 
         PostDto postDto = new PostDto(post);
+        MemberDto memberDto = new MemberDto(memberService.findById(memberId));
         model.addAttribute("post", postDto);
         model.addAttribute("comments", commentDtoList);
         model.addAttribute("authorFlag", authorFlag);
-
+        model.addAttribute("member", memberDto);
         return "post";
     }
 
@@ -199,8 +200,8 @@ public class MarketController {
             UploadFile uploadFile = uploadFiles.get(0);
             thumbnailName = uploadFile.getStoreName();
         } else {
-            thumbnailName = "default.png";
-//            thumbnailName = "default.jpg";
+//            thumbnailName = "default.png";
+            thumbnailName = "default.jpg";
         }
 
         return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName, post.getCreatedDate());

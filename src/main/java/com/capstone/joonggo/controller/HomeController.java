@@ -87,8 +87,8 @@ public class HomeController {
             UploadFile uploadFile = uploadFiles.get(0);
             thumbnailName = uploadFile.getStoreName();
         } else {
-            thumbnailName = "default.png";
-//            thumbnailName = "default.jpg";
+//            thumbnailName = "default.png";
+            thumbnailName = "default.jpg";
         }
 
         return new MemberPostDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName, post.getStatus(), post.getCreatedDate());
