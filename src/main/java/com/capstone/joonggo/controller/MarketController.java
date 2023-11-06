@@ -50,14 +50,11 @@ public class MarketController {
             member = memberService.findById(memberId);
         }
         MemberDto memberDto = member != null ? new MemberDto(member) : null;
-
         List<MarketDto> marketDtoList = new ArrayList<>();
         for (Post post : posts) {
             MarketDto marketDto = convertToMarketDto(post);
             marketDtoList.add(marketDto);
         }
-
-
         model.addAttribute("member", memberDto);
         model.addAttribute("posts", marketDtoList);
         model.addAttribute("paging", posts);
