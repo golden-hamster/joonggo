@@ -204,7 +204,7 @@ public class MarketController {
             thumbnailName = "default.jpg";
         }
 
-        return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName, post.getCreatedDate());
+        return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName, post.getCreatedDate(), post.getStatus());
     }
 
     public CommentDto convertToCommentDto(Comment comment) {
