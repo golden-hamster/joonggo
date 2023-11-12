@@ -83,10 +83,12 @@
            th:href="@{~/market/{postId}(postId=${post.postId})}">
             <img th:src="|/images/${post.thumbnailName}|" class="card-img-top rounded-5" alt="...">
             <div class="card-body">
-                <h5 class="card-title" th:class="${post.status == T(com.capstone.joonggo.domain.PostStatus).COMPLETED} ? 'completed' : ''">
+                <h5 class="card-title"
+                    th:class="${post.status == T(com.capstone.joonggo.domain.PostStatus).COMPLETED} ? 'completed' : ''">
                     <span th:text="${post.title}"></span>
                 </h5>
-                <p class="card-text" th:class="${post.status == T(com.capstone.joonggo.domain.PostStatus).COMPLETED} ? 'completed' : ''">
+                <p class="card-text"
+                   th:class="${post.status == T(com.capstone.joonggo.domain.PostStatus).COMPLETED} ? 'completed' : ''">
                     <span th:text="${post.price}"></span>
                 </p>
                 <p class="card-text" th:text="${post.createdDate}">text</p>
