@@ -48,7 +48,7 @@ public class HomeController {
 
     @GetMapping("/member/join")
     public String joinForm() {
-        return "joinMember1";
+        return "joinMember2";
     }
 
     @PostMapping("/member/join")

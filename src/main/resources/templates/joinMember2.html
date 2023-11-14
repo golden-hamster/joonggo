@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Member</title>
+    <link rel="stylesheet" href="/css/joinMember2.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+</head>
+<body>
+<h1>UNISWAP</h1>
+<form action="/member/join" method="post">
+
+    <div>
+        <p class="sign" align="center">JOIN</p>
+    </div>
+
+    <div>
+        <input placeholder="E-MAIL" type="text" id="email" name="email">
+    </div>
+    <div>
+        <input placeholder="PASSWORD" type="password" id="password" name="password">
+    </div>
+    <div>
+        <input placeholder="NAME" type="text" id="name" name="name">
+    </div>
+    <div>
+        <input placeholder="STUDENT ID" type="text" id="studentId" name="studentId">
+    </div>
+    <div>
+        <input placeholder="NICKNAME" type="text" id="nickName" name="nickName"/>
+    </div>
+    <div>
+        <button type="submit">OK</button>
+    </div>
+</form>
+</body>
+</html>
