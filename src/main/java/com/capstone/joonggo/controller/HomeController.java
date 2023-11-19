@@ -4,6 +4,7 @@ import com.capstone.joonggo.domain.*;
 import com.capstone.joonggo.dto.MemberDto;
 import com.capstone.joonggo.dto.MemberPostDto;
 import com.capstone.joonggo.dto.MemberJoinDto;
+import com.capstone.joonggo.service.LikesService;
 import com.capstone.joonggo.service.MemberService;
 import com.capstone.joonggo.service.PostService;
 import com.capstone.joonggo.session.SessionConst;
@@ -27,6 +28,7 @@ public class HomeController {
 
     private final MemberService memberService;
     private final PostService postService;
+    private final LikesService likesService;
 
     @GetMapping("/")
     public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)Long memberId, Model model) {
@@ -78,6 +80,24 @@ public class HomeController {
         model.addAttribute("member", memberDto);
 
         return "member";
+    }
+
+    @GetMapping("/member/{nickName}/likes")
+    public String memberLikesPage(@PathVariable String nickName, Model model) {
+        Member member = memberService.findByNickName(nickName);
+        List<Post> posts = likesService.findByMemberId(member.getId());
+
+        List<MemberPostDto> memberPostDtoList = new ArrayList<>();
+        for (Post post : posts) {
+            MemberPostDto memberDto = convertToMemberDto(post);
+            memberPostDtoList.add(memberDto);
+        }
+        MemberDto memberDto = new MemberDto(nickName);
+
+        model.addAttribute("posts", memberPostDtoList);
+        model.addAttribute("member", memberDto);
+
+        return "likes";
     }
 
     public MemberPostDto convertToMemberDto(Post post) {

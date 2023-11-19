@@ -3,10 +3,7 @@ package com.capstone.joonggo.controller;
 import com.capstone.joonggo.domain.*;
 import com.capstone.joonggo.dto.*;
 import com.capstone.joonggo.search.PostSearch;
-import com.capstone.joonggo.service.CommentService;
-import com.capstone.joonggo.service.MemberService;
-import com.capstone.joonggo.service.PostService;
-import com.capstone.joonggo.service.UploadFileService;
+import com.capstone.joonggo.service.*;
 import com.capstone.joonggo.session.SessionConst;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +35,7 @@ public class MarketController {
     private final MemberService memberService;
     private final CommentService commentService;
     private final UploadFileService uploadFileService;
+    private final LikesService likesService;
 
 
     @GetMapping("/market")
@@ -68,6 +66,9 @@ public class MarketController {
         Post post = postService.findById(postId);
 
         boolean authorFlag = post.getMember().getId().equals(memberId);
+        boolean likesFlag = likesService.findByMemberId(memberId).stream()
+                .filter(likes -> likes.getId().equals(postId))
+                .findFirst().isPresent();
 
         List<Comment> comments = commentService.findByPostId(postId);
         List<CommentDto> commentDtoList = new ArrayList<>();
@@ -82,6 +83,7 @@ public class MarketController {
         model.addAttribute("comments", commentDtoList);
         model.addAttribute("authorFlag", authorFlag);
         model.addAttribute("member", memberDto);
+        model.addAttribute("likesFlag", likesFlag);
         return "post";
     }
 
@@ -188,6 +190,23 @@ public class MarketController {
         List<UploadFile> uploadFiles = uploadFileService.saveFiles(createPostDto.getImageFiles());
         postService.update(postId, createPostDto.getTitle(), createPostDto.getContent(), createPostDto.getPrice(), uploadFiles);
         return "redirect:/market/" + postId;
+    }
+
+    @PostMapping("/market/{postId}/likes")
+    public String likePost(@PathVariable Long postId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long memberId,
+                           RedirectAttributes redirectAttributes) {
+        likesService.save(memberId, postId);
+        redirectAttributes.addAttribute("postId", postId);
+        return "redirect:/market/{postId}";
+    }
+
+    @PostMapping("/member/{postId}/likes/delete")
+    public String deleteLikes(@PathVariable Long postId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long memberId,
+                              RedirectAttributes redirectAttributes) {
+
+        likesService.delete(memberId, postId);
+        redirectAttributes.addAttribute("postId", postId);
+        return "redirect:/market/{postId}";
     }
 
     public MarketDto convertToMarketDto(Post post) {

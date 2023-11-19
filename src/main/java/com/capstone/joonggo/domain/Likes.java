@@ -1,8 +1,6 @@
 package com.capstone.joonggo.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.util.List;
@@ -12,8 +10,17 @@ import java.util.List;
 public class Likes {
 
     @Id
+    @GeneratedValue
+    private Long id;
+
     private Long memberId;
 
-    @OneToMany()
-    private List<Post> post;
+    private Long postId;
+
+    public static Likes createLikes(Long memberId, Long postId) {
+        Likes likes = new Likes();
+        likes.memberId = memberId;
+        likes.postId = postId;
+        return likes;
+    }
 }

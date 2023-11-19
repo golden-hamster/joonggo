@@ -10,7 +10,6 @@ class JoonggoApplicationTests {
 	@Test
 	void contextLoads() {
 
-		Assertions.assertThat()
 	}
 
 }
