@@ -27,16 +27,13 @@ public class PostService {
     private final PostQueryRepository postQueryRepository;
 
 
-    public Long saveTest(Post post) {
-        postRepository.save(post);
-        return post.getId();
-    }
 
     @Transactional
     public Long save(CreatePostDto createPostDto, List<UploadFile> uploadFiles) {
         Member member = memberRepository.findById(createPostDto.getMemberId()).get();
         Post post = Post.createPost(member, createPostDto.getTitle(), createPostDto.getTitle(), createPostDto.getPrice(),
                 PostStatus.SALE, uploadFiles);
+
         return postRepository.save(post).getId();
     }
 
@@ -74,5 +71,12 @@ public class PostService {
     public void updateStatus(Long postId,PostStatus status) {
         Post post = postRepository.findById(postId).orElse(null);
         post.updateStatus(status);
+    }
+
+    @Transactional
+    public void addLikesCount(Long postId) {
+        postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("게시물을 찾지못했습니다."))
+                .addLikesCount();
     }
 }

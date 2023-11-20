@@ -14,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -66,9 +65,16 @@ public class MarketController {
         Post post = postService.findById(postId);
 
         boolean authorFlag = post.getMember().getId().equals(memberId);
-        boolean likesFlag = likesService.findByMemberId(memberId).stream()
-                .filter(likes -> likes.getId().equals(postId))
-                .findFirst().isPresent();
+
+        boolean likesFlag = likesService.findByMemberId(memberId).contains(post);
+
+//        if (likesByMemberId != null) {
+//            likesFlag = likesByMemberId.stream()
+//                    .filter(likes -> likes.getId().equals(postId))
+//                    .findFirst().isPresent();
+//        } else {
+//            likesFlag = false;
+//        }
 
         List<Comment> comments = commentService.findByPostId(postId);
         List<CommentDto> commentDtoList = new ArrayList<>();
@@ -131,7 +137,7 @@ public class MarketController {
             return "redirect:/market";
         }
 
-        Comment savedComment = commentService.save(comment);
+        commentService.save(comment);
         redirectAttributes.addAttribute("postId", postId);
         return "redirect:/market/{postId}";
     }
@@ -196,6 +202,7 @@ public class MarketController {
     public String likePost(@PathVariable Long postId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long memberId,
                            RedirectAttributes redirectAttributes) {
         likesService.save(memberId, postId);
+        postService.addLikesCount(postId);
         redirectAttributes.addAttribute("postId", postId);
         return "redirect:/market/{postId}";
     }
@@ -216,8 +223,8 @@ public class MarketController {
             UploadFile uploadFile = uploadFiles.get(0);
             thumbnailName = uploadFile.getStoreName();
         } else {
-//            thumbnailName = "default.png";
-            thumbnailName = "default.jpg";
+            thumbnailName = "default.png";
+//            thumbnailName = "default.jpg";
         }
 
         return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName, post.getCreatedDate(), post.getStatus());

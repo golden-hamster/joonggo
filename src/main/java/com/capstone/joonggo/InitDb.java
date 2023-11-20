@@ -57,18 +57,18 @@ public class InitDb {
          */
 
         public void dbInit2() {
-            for (int i = 1; i <= 1; i++) {
+            for (int i = 1; i <= 2; i++) {
                 // 멤버 생성
                 Member member = Member.createMember("test" + i + "@test.com", bCryptPasswordEncoder.encode("test"), "test" + i, "test", 120 + i,
                         Role.ROLE_USER, LoginType.NORMAL);
                 em.persist(member);
                 // 글 생성
-                for (int j = 1; j <= 1000; j++) {
+                for (int j = 1; j <= 500; j++) {
                     Post post = Post.createPost(member, "Test title" + j, "content is...", 15000 + (j * 1000), PostStatus.SALE, null);
                     em.persist(post);
 
                     // 댓글 생성
-                    for (int k = 1; k <= 10; k++) {
+                    for (int k = 1; k <= 5; k++) {
                         Comment comment = Comment.createComment(post, member, "Comment is...");
                         em.persist(comment);
                     }

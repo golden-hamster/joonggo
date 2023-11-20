@@ -22,10 +22,6 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "category_id")
-//    private Category category;
-
     private String title;
 
     private String content;
@@ -40,7 +36,9 @@ public class Post {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UploadFile> uploadFiles;
 
-    public static Post createPost(Member member, String title, String content, Integer price, PostStatus status,List<UploadFile> uploadFiles) {
+    private Integer likesCount;
+
+    public static Post createPost(Member member, String title, String content, Integer price, PostStatus status, List<UploadFile> uploadFiles) {
         Post post = new Post();
         post.member = member;
         post.title = title;
@@ -49,7 +47,8 @@ public class Post {
         post.uploadFiles = uploadFiles;
         post.status = status;
         post.createdDate = LocalDateTime.now();
-        return  post;
+        post.likesCount = 0;
+        return post;
     }
 
     public void update(String title, String content, Integer price, List<UploadFile> uploadFiles) {
@@ -64,5 +63,9 @@ public class Post {
 
     public void updateStatus(PostStatus status) {
         this.status = status;
+    }
+
+    public void addLikesCount() {
+        this.likesCount++;
     }
 }
