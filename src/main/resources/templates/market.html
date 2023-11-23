@@ -29,7 +29,7 @@
 
       .card{
         margin-bottom: 56px;
-        border-width: 0px;
+        border-width: 1px;
       }
 
       h1{
@@ -91,7 +91,8 @@
                    th:class="${post.status == T(com.capstone.joonggo.domain.PostStatus).COMPLETED} ? 'completed' : ''">
                     <span th:text="${post.price}"></span>
                 </p>
-                <p class="card-text" th:text="${post.createdDate}">text</p>
+                <p class="card-text" th:text="${post.createdDate}">createdDate</p>
+                <p class="cart-text" th:text="|찜: ${post.likesCount}|">likesCount</p>
             </div>
         </a>
     </div>

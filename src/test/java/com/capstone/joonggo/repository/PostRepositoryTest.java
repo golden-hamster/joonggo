@@ -31,5 +31,6 @@ public class PostRepositoryTest {
 
         List<Post> byMemberNickName = postRepository.findByMemberNickName(member.getNickName());
         Assertions.assertThat(byMemberNickName.get(0)).isEqualTo(post);
+
     }
 }

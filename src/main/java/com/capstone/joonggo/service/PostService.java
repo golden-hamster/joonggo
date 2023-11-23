@@ -76,7 +76,14 @@ public class PostService {
     @Transactional
     public void addLikesCount(Long postId) {
         postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("게시물을 찾지못했습니다."))
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."))
                 .addLikesCount();
+    }
+
+    @Transactional
+    public void subLikesCount(Long postId) {
+        postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."))
+                .subLikesCount();
     }
 }

@@ -207,11 +207,12 @@ public class MarketController {
         return "redirect:/market/{postId}";
     }
 
-    @PostMapping("/member/{postId}/likes/delete")
+    @PostMapping("/market/{postId}/likes/delete")
     public String deleteLikes(@PathVariable Long postId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long memberId,
                               RedirectAttributes redirectAttributes) {
 
         likesService.delete(memberId, postId);
+        postService.subLikesCount(postId);
         redirectAttributes.addAttribute("postId", postId);
         return "redirect:/market/{postId}";
     }
@@ -223,11 +224,11 @@ public class MarketController {
             UploadFile uploadFile = uploadFiles.get(0);
             thumbnailName = uploadFile.getStoreName();
         } else {
-            thumbnailName = "default.png";
-//            thumbnailName = "default.jpg";
+//            thumbnailName = "default.png";
+            thumbnailName = "default.jpg";
         }
 
-        return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName, post.getCreatedDate(), post.getStatus());
+        return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName, post.getCreatedDate(), post.getStatus(), post.getLikesCount());
     }
 
     public CommentDto convertToCommentDto(Comment comment) {

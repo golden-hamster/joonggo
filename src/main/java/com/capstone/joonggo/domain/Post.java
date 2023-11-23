@@ -68,4 +68,8 @@ public class Post {
     public void addLikesCount() {
         this.likesCount++;
     }
+
+    public void subLikesCount() {
+        this.likesCount--;
+    }
 }

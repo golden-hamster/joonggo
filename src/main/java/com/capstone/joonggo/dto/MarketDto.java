@@ -20,12 +20,15 @@ public class MarketDto {
 
     private PostStatus status;
 
-    public MarketDto(String title, Integer price,Long postId, String thumbnailName,LocalDateTime createdDate, PostStatus status) {
+    private Integer likesCount;
+
+    public MarketDto(String title, Integer price,Long postId, String thumbnailName,LocalDateTime createdDate, PostStatus status, Integer likesCount) {
         this.title = title;
         this.price = price;
         this.postId = postId;
         this.thumbnailName = thumbnailName;
         this.createdDate = createdDate;
         this.status = status;
+        this.likesCount = likesCount;
     }
 }
