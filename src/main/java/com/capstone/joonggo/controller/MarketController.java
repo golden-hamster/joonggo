@@ -201,6 +201,10 @@ public class MarketController {
     @PostMapping("/market/{postId}/likes")
     public String likePost(@PathVariable Long postId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long memberId,
                            RedirectAttributes redirectAttributes) {
+        Post post = postService.findById(postId);
+        if (post.getMember().getId().equals(memberId) == true) {
+            return "redirect:/market/{postId}";
+        }
         likesService.save(memberId, postId);
         postService.addLikesCount(postId);
         redirectAttributes.addAttribute("postId", postId);
