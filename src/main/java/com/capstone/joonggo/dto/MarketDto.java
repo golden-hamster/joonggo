@@ -16,13 +16,13 @@ public class MarketDto {
 
     private String thumbnailName;
 
-    private LocalDateTime createdDate;
+    private String createdDate;
 
     private PostStatus status;
 
     private Integer likesCount;
 
-    public MarketDto(String title, Integer price,Long postId, String thumbnailName,LocalDateTime createdDate, PostStatus status, Integer likesCount) {
+    public MarketDto(String title, Integer price,Long postId, String thumbnailName,String createdDate, PostStatus status, Integer likesCount) {
         this.title = title;
         this.price = price;
         this.postId = postId;
