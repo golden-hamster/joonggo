@@ -18,9 +18,9 @@ public class MemberPostDto {
 
     private PostStatus status;
 
-    private LocalDateTime createdDate;
+    private String createdDate;
 
-    public MemberPostDto(String title, Integer price, Long postId, String thumbnailName, PostStatus status, LocalDateTime createdDate) {
+    public MemberPostDto(String title, Integer price, Long postId, String thumbnailName, PostStatus status, String createdDate) {
         this.title = title;
         this.price = price;
         this.postId = postId;

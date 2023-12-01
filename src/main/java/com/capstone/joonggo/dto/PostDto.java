@@ -26,11 +26,11 @@ public class PostDto {
 
     public List<String> storeFileNames;
 
-    public LocalDateTime createdTime;
+    public String createdTime;
 
     public PostStatus status;
 
-    public PostDto(String title, String nickName, Integer price, String content, List<String> storeNames, LocalDateTime createdTime) {
+    public PostDto(String title, String nickName, Integer price, String content, List<String> storeNames, String createdTime) {
         this.title = title;
         this.nickName = nickName;
         this.price = price;

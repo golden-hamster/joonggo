@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 
 @Entity
@@ -28,7 +30,7 @@ public class Post {
 
     private Integer price;
 
-    private LocalDateTime createdDate;
+    private String createdDate;
 
     @Enumerated(EnumType.STRING)
     private PostStatus status;
@@ -46,7 +48,7 @@ public class Post {
         post.price = price;
         post.uploadFiles = uploadFiles;
         post.status = status;
-        post.createdDate = LocalDateTime.now();
+        post.createdDate = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
         post.likesCount = 0;
         return post;
     }

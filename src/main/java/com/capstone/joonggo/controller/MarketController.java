@@ -22,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -250,6 +252,7 @@ public class MarketController {
             String storeName = uploadFile.getStoreName();
             storeNames.add(storeName);
         }
+
         return new PostDto(post.getTitle(), nickName, post.getPrice(), post.getContent(), storeNames, post.getCreatedDate());
     }
 
