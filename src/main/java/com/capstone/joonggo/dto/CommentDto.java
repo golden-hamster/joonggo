@@ -17,9 +17,9 @@ public class CommentDto {
     @NotBlank
     public String content;
 
-    public LocalDateTime createdDate;
+    public String createdDate;
 
-    public CommentDto(Long commentId, String author, String email, String content, LocalDateTime createdTime) {
+    public CommentDto(Long commentId, String author, String email, String content, String createdTime) {
         this.commentId = commentId;
         this.author = author;
         this.email = email;

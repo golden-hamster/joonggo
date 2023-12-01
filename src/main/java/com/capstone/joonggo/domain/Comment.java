@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 @Entity
 @Getter
@@ -24,7 +26,7 @@ public class Comment {
 
     private String content;
 
-    private LocalDateTime createdDate;
+    private String createdDate;
 
     public void setContent(String content) {
         this.content = content;
@@ -35,7 +37,7 @@ public class Comment {
         cmt.post = post;
         cmt.member = member;
         cmt.content = content;
-        cmt.createdDate = LocalDateTime.now();
+        cmt.createdDate = LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
         return cmt;
     }
 }
