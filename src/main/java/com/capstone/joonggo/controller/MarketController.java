@@ -70,14 +70,6 @@ public class MarketController {
 
         boolean likesFlag = likesService.findByMemberId(memberId).contains(post);
 
-//        if (likesByMemberId != null) {
-//            likesFlag = likesByMemberId.stream()
-//                    .filter(likes -> likes.getId().equals(postId))
-//                    .findFirst().isPresent();
-//        } else {
-//            likesFlag = false;
-//        }
-
         List<Comment> comments = commentService.findByPostId(postId);
         List<CommentDto> commentDtoList = new ArrayList<>();
         for (Comment comment : comments) {
