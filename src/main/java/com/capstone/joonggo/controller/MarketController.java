@@ -208,6 +208,11 @@ public class MarketController {
     @PostMapping("/market/{postId}/likes/delete")
     public String deleteLikes(@PathVariable Long postId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long memberId,
                               RedirectAttributes redirectAttributes) {
+        Post post = postService.findById(postId);
+        if (likesService.findByMemberId(memberId).contains(post) == false) {
+            return "redirect:/market/{postId}";
+        }
+
 
         likesService.delete(memberId, postId);
         postService.subLikesCount(postId);
@@ -222,8 +227,8 @@ public class MarketController {
             UploadFile uploadFile = uploadFiles.get(0);
             thumbnailName = uploadFile.getStoreName();
         } else {
-//            thumbnailName = "default.png";
-            thumbnailName = "default.jpg";
+            thumbnailName = "default.png";
+//            thumbnailName = "default.jpg";
         }
 
         return new MarketDto(post.getTitle(), post.getPrice(), post.getId(), thumbnailName, post.getCreatedDate(), post.getStatus(), post.getLikesCount());
